@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 
 const VIDEO_URL_DESKTOP = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
-const VIDEO_URL_MOBILE = "https://res.cloudinary.com/di8ireioi/video/upload/w_720,q_60/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
+const VIDEO_URL_MOBILE = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
 
 export function CTASection() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -52,12 +52,12 @@ export function CTASection() {
     video.autoplay = true
     video.loop = true
     video.preload = "auto"
-    
+
     video.setAttribute("muted", "")
     video.setAttribute("playsinline", "")
     video.setAttribute("webkit-playsinline", "")
     video.setAttribute("autoplay", "")
-    
+
     video.playbackRate = 0.8
 
     let playAttempts = 0
@@ -65,11 +65,11 @@ export function CTASection() {
 
     const attemptPlay = async () => {
       if (playAttempts >= maxAttempts) return
-      
+
       playAttempts++
       video.muted = true
       video.volume = 0
-      
+
       try {
         if (video.readyState < 2) {
           video.load()

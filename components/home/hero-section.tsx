@@ -6,7 +6,7 @@ import { LoadingScreen } from "@/components/loading-screen"
 
 // Use smaller mobile-optimized video for iOS
 const VIDEO_URL_DESKTOP = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
-const VIDEO_URL_MOBILE = "https://res.cloudinary.com/di8ireioi/video/upload/w_720,q_60/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
+const VIDEO_URL_MOBILE = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -33,13 +33,13 @@ export function HeroSection() {
     video.autoplay = true
     video.loop = true
     video.preload = "auto"
-    
+
     // Set attributes directly on element
     video.setAttribute("muted", "")
     video.setAttribute("playsinline", "")
     video.setAttribute("webkit-playsinline", "")
     video.setAttribute("autoplay", "")
-    
+
     video.playbackRate = 0.75
 
     let playAttempts = 0
@@ -51,19 +51,19 @@ export function HeroSection() {
         setIsLoading(false)
         return
       }
-      
+
       playAttempts++
-      
+
       // Re-ensure muted state (iOS is picky)
       video.muted = true
       video.volume = 0
-      
+
       try {
         // Load the video first
         if (video.readyState < 2) {
           video.load()
         }
-        
+
         await video.play()
         setIsVideoReady(true)
         setTimeout(() => setIsLoading(false), 200)

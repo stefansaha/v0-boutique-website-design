@@ -24,6 +24,72 @@ export default function AboutPage() {
                 <br />
                 <span className="text-secondary">Eine kleine Welt für sich.</span>
               </h1>
+              <p className="text-muted-foreground text-lg mb-8">
+                Lerne die Boutique kennen und erlebe persönliche Beratung in entspannter Atmosphäre.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Link
+                  href="/termin"
+                  className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-[#1a1a1a] text-white font-serif text-sm sm:text-base tracking-wide rounded-full hover:bg-[#2a2a2a] transition-all duration-300 hover:shadow-lg"
+                >
+                  <span>Termin vereinbaren</span>
+                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                  </svg>
+                </Link>
+                <Link
+                  href="/erlebnis"
+                  className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-[#1a1a1a]/20 text-[#1a1a1a] font-serif text-sm sm:text-base tracking-wide rounded-full hover:border-[#1a1a1a]/40 hover:bg-[#1a1a1a]/5 transition-all duration-300"
+                >
+                  <span>Deinen Besuch planen</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Warum Rinabelle Section */}
+        <section className="py-16 sm:py-20 bg-[#faf9f7]">
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-10 sm:mb-14">
+                Warum Rinabelle?
+              </h2>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 lg:gap-12">
+                <div className="text-center">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 sm:mb-5 rounded-full border border-[#c4a47c]/30 flex items-center justify-center">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-[#c4a47c]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                    </svg>
+                  </div>
+                  <p className="text-foreground text-sm sm:text-base leading-relaxed">
+                    Handverlesene Stücke mit Liebe ausgewählt
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 sm:mb-5 rounded-full border border-[#c4a47c]/30 flex items-center justify-center">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-[#c4a47c]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                  </div>
+                  <p className="text-foreground text-sm sm:text-base leading-relaxed">
+                    Persönliche Beratung ohne Druck
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 sm:mb-5 rounded-full border border-[#c4a47c]/30 flex items-center justify-center">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-[#c4a47c]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                  </div>
+                  <p className="text-foreground text-sm sm:text-base leading-relaxed">
+                    Eine Atmosphäre zum Wohlfühlen
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -131,10 +197,13 @@ export default function AboutPage() {
               Am besten lernst du Rinabelle persönlich kennen. Ich freu mich auf deinen Besuch.
             </p>
             <Link
-              href="/standort"
-              className="inline-block px-8 py-4 bg-white text-[#2a2a2a] font-medium hover:bg-white/90 transition-colors"
+              href="/termin"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/95 text-[#2a2a2a] font-serif tracking-wide rounded-full hover:bg-white transition-all duration-300 hover:shadow-lg"
             >
-              Zur Boutique
+              <span>Jetzt Termin vereinbaren</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
             </Link>
           </div>
         </section>

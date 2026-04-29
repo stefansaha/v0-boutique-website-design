@@ -22,22 +22,24 @@ export function HeroSection() {
 
     const attemptPlay = () => {
       if (hasPlayed) return
-      const playPromise = video.play()
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            hasPlayed = true
-            setIsVideoReady(true)
-            setTimeout(() => setIsLoading(false), 300)
-          })
-          .catch(() => {
-            setIsVideoReady(true)
-            setIsLoading(false)
-          })
-      }
+      video.play()
+        .then(() => {
+          hasPlayed = true
+          setIsVideoReady(true)
+          setTimeout(() => setIsLoading(false), 300)
+        })
+        .catch(() => {
+          setIsVideoReady(true)
+          setIsLoading(false)
+        })
     }
 
     video.addEventListener("canplay", attemptPlay, { once: true })
+    video.addEventListener("loadedmetadata", attemptPlay, { once: true })
+
+    if (video.readyState >= 3) {
+      attemptPlay()
+    }
 
     const fallbackTimer = setTimeout(() => {
       setIsLoading(false)
@@ -47,6 +49,7 @@ export function HeroSection() {
     return () => {
       clearTimeout(fallbackTimer)
       video.removeEventListener("canplay", attemptPlay)
+      video.removeEventListener("loadedmetadata", attemptPlay)
     }
   }, [])
 
@@ -62,7 +65,7 @@ export function HeroSection() {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             controls={false}
             style={{
               width: "100%",
@@ -93,8 +96,7 @@ export function HeroSection() {
               </h1>
 
               <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-md">
-                Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen.
-                Komm vorbei.
+                Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen. Komm vorbei.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">

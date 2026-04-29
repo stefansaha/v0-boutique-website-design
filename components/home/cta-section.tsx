@@ -27,9 +27,15 @@ export function CTASection() {
     }
 
     video.addEventListener("canplay", playVideo, { once: true })
+    video.addEventListener("loadedmetadata", playVideo, { once: true })
+
+    if (video.readyState >= 3) {
+      playVideo()
+    }
 
     return () => {
       video.removeEventListener("canplay", playVideo)
+      video.removeEventListener("loadedmetadata", playVideo)
     }
   }, [])
 
@@ -42,7 +48,7 @@ export function CTASection() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           controls={false}
           className="w-full h-full object-cover"
         >

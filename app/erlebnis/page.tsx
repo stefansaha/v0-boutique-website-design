@@ -75,6 +75,26 @@ export default function ExperiencePage() {
                   <br />
                   <span className="text-white/70">Nur Mode und gute Gespräche.</span>
                 </h1>
+                <p className="text-white/70 mt-4 sm:mt-6 text-base sm:text-lg">
+                  Komm vorbei oder sichere dir deinen Termin – ganz entspannt.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8">
+                  <Link
+                    href="/termin"
+                    className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white/95 text-[#1a1a1a] font-serif text-sm sm:text-base tracking-wide rounded-full hover:bg-white transition-all duration-300 hover:shadow-lg"
+                  >
+                    <span>Termin vereinbaren</span>
+                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                  </Link>
+                  <Link
+                    href="/standort"
+                    className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-white/40 text-white font-serif text-sm sm:text-base tracking-wide rounded-full hover:border-white/70 hover:bg-white/5 transition-all duration-300"
+                  >
+                    <span>Einfach vorbeikommen</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -88,6 +108,46 @@ export default function ExperiencePage() {
                 Bei mir gibt es keine aufdringlichen Verkäufer, keine überfüllten Regale, keinen Zeitdruck. 
                 Nur eine entspannte Atmosphäre und ehrliche Beratung, wenn du sie möchtest.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Simple Process Steps */}
+        <section className="py-12 sm:py-16 bg-[#faf9f7]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-10 sm:mb-14">
+                So läuft dein Besuch ab
+              </h2>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 lg:gap-12">
+                <div className="text-center">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 sm:mb-5 rounded-full border border-[#c4a47c]/30 flex items-center justify-center">
+                    <span className="font-serif text-lg sm:text-xl text-[#c4a47c]">1</span>
+                  </div>
+                  <p className="text-foreground text-sm sm:text-base leading-relaxed">
+                    Du kommst vorbei oder buchst einen Termin
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 sm:mb-5 rounded-full border border-[#c4a47c]/30 flex items-center justify-center">
+                    <span className="font-serif text-lg sm:text-xl text-[#c4a47c]">2</span>
+                  </div>
+                  <p className="text-foreground text-sm sm:text-base leading-relaxed">
+                    Persönliche Beratung in Ruhe
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 sm:mb-5 rounded-full border border-[#c4a47c]/30 flex items-center justify-center">
+                    <span className="font-serif text-lg sm:text-xl text-[#c4a47c]">3</span>
+                  </div>
+                  <p className="text-foreground text-sm sm:text-base leading-relaxed">
+                    Du findest dein perfektes Outfit
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

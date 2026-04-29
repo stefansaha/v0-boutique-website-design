@@ -5,7 +5,7 @@ import { ShapeGrid } from "@/components/ui/shape-grid"
 
 export function CTASection() {
   return (
-    <section className="relative py-24 lg:py-32 bg-gradient-to-br from-[#2a2a2a] via-[#1f1f1f] to-[#1a1a1a] text-white overflow-hidden">
+    <section className="relative pt-16 sm:pt-20 pb-24 lg:pb-32 bg-gradient-to-br from-[#2a2a2a] via-[#1f1f1f] to-[#1a1a1a] text-white overflow-hidden -mt-1">
       {/* Shape Grid Background */}
       <div className="absolute inset-0 opacity-40">
         <ShapeGrid

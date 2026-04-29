@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
@@ -25,6 +24,7 @@ export function Navigation() {
       setIsScrolled(window.scrollY > 50)
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -40,96 +40,144 @@ export function Navigation() {
     }
   }, [isOpen])
 
+  // Close menu on route change
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname])
+
   const showDarkNav = !isHomePage || isScrolled
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        showDarkNav
-          ? "bg-white/95 backdrop-blur-sm py-3 sm:py-4 shadow-sm"
-          : "bg-transparent py-4 sm:py-6"
-      )}
-    >
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link 
-            href="/" 
-            className={cn(
-              "font-serif text-xl sm:text-2xl tracking-wide transition-colors",
-              showDarkNav ? "text-foreground" : "text-white"
-            )}
-          >
-            Rinabelle
-          </Link>
+    <>
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          showDarkNav
+            ? "bg-white/95 backdrop-blur-md py-3 shadow-sm"
+            : "bg-gradient-to-b from-black/30 to-transparent py-4 sm:py-5"
+        )}
+      >
+        <nav className="container mx-auto px-5 sm:px-6 lg:px-12">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link 
+              href="/" 
+              className={cn(
+                "font-serif text-xl sm:text-2xl tracking-wide transition-colors",
+                showDarkNav ? "text-foreground" : "text-white"
+              )}
+            >
+              Rinabelle
+            </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8 xl:gap-10">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "px-4 py-2 text-sm tracking-wide transition-all duration-200 relative rounded-full",
+                    showDarkNav 
+                      ? pathname === link.href
+                        ? "text-foreground bg-muted"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      : pathname === link.href
+                        ? "text-white bg-white/15"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={cn(
+                "lg:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5 transition-colors z-50",
+                isOpen ? "text-foreground" : showDarkNav ? "text-foreground" : "text-white"
+              )}
+              aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
+              aria-expanded={isOpen}
+            >
+              <span 
                 className={cn(
-                  "text-sm tracking-wide transition-colors relative py-2",
-                  showDarkNav 
-                    ? "text-muted-foreground hover:text-foreground" 
-                    : "text-white/80 hover:text-white",
-                  pathname === link.href && "font-medium"
-                )}
-              >
-                {link.label}
-                {pathname === link.href && (
-                  <span className={cn(
-                    "absolute -bottom-0 left-0 right-0 h-px",
-                    showDarkNav ? "bg-foreground" : "bg-white"
-                  )} />
-                )}
-              </Link>
-            ))}
+                  "w-6 h-0.5 bg-current transition-all duration-300 origin-center",
+                  isOpen && "rotate-45 translate-y-2"
+                )} 
+              />
+              <span 
+                className={cn(
+                  "w-6 h-0.5 bg-current transition-all duration-300",
+                  isOpen && "opacity-0 scale-0"
+                )} 
+              />
+              <span 
+                className={cn(
+                  "w-6 h-0.5 bg-current transition-all duration-300 origin-center",
+                  isOpen && "-rotate-45 -translate-y-2"
+                )} 
+              />
+            </button>
           </div>
+        </nav>
+      </header>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={cn(
-              "lg:hidden p-2 -mr-2 transition-colors touch-manipulation",
-              showDarkNav ? "text-foreground" : "text-white"
-            )}
-            aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation - Full Screen Overlay */}
-        <div
+      {/* Mobile Navigation - Full Screen Overlay */}
+      <div
+        className={cn(
+          "lg:hidden fixed inset-0 z-40 transition-all duration-500 ease-out",
+          isOpen ? "pointer-events-auto" : "pointer-events-none"
+        )}
+      >
+        {/* Backdrop */}
+        <div 
           className={cn(
-            "lg:hidden fixed inset-0 bg-white z-40 transition-all duration-300 flex flex-col",
-            isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            "absolute inset-0 bg-white transition-opacity duration-500",
+            isOpen ? "opacity-100" : "opacity-0"
           )}
-          style={{ top: "56px" }}
-        >
-          <div className="flex flex-col items-center justify-center flex-1 gap-6 sm:gap-8 px-6">
-            {navLinks.map((link, index) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className={cn(
-                  "font-serif text-2xl sm:text-3xl text-foreground hover:text-secondary transition-colors",
-                  "transform transition-all duration-300",
-                  isOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
-                  pathname === link.href && "text-secondary"
-                )}
-                style={{ transitionDelay: isOpen ? `${index * 50}ms` : "0ms" }}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <div className="pb-8 sm:pb-12 text-center">
+          onClick={() => setIsOpen(false)}
+        />
+        
+        {/* Content */}
+        <div className="relative h-full flex flex-col pt-24 pb-12 px-8">
+          <nav className="flex-1 flex flex-col justify-center">
+            <ul className="space-y-2">
+              {navLinks.map((link, index) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "block py-3 font-serif text-3xl sm:text-4xl transition-all duration-500",
+                      isOpen 
+                        ? "opacity-100 translate-x-0" 
+                        : "opacity-0 -translate-x-8",
+                      pathname === link.href 
+                        ? "text-secondary" 
+                        : "text-foreground hover:text-secondary"
+                    )}
+                    style={{ 
+                      transitionDelay: isOpen ? `${100 + index * 50}ms` : "0ms" 
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          
+          {/* Footer info */}
+          <div 
+            className={cn(
+              "transition-all duration-500 border-t border-border pt-6",
+              isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+            style={{ transitionDelay: isOpen ? "400ms" : "0ms" }}
+          >
             <a 
               href="https://instagram.com/rinabelle.fashion" 
               target="_blank" 
@@ -138,9 +186,12 @@ export function Navigation() {
             >
               @rinabelle.fashion
             </a>
+            <p className="text-xs text-muted-foreground mt-2">
+              Lauda-Königshofen
+            </p>
           </div>
         </div>
-      </nav>
-    </header>
+      </div>
+    </>
   )
 }

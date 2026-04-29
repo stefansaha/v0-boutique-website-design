@@ -5,7 +5,9 @@ import Link from "next/link"
 
 export function AboutPreview() {
   return (
-    <section className="py-24 lg:py-32 bg-[#f8f6f3]">
+    <section className="relative py-24 lg:py-32 bg-[#f8f6f3]">
+      {/* Bottom gradient transition to dark CTA section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 sm:h-48 bg-gradient-to-b from-transparent via-[#f8f6f3]/50 to-[#2a2a2a] pointer-events-none" />
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image Side */}

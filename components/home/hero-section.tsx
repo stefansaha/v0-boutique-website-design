@@ -16,23 +16,50 @@ export function HeroSection() {
     // Set playback rate
     video.playbackRate = 0.75
 
-    // Try to play immediately
+    // Force play on mobile - critical attributes
+    video.muted = true
+    video.playsInline = true
+    video.setAttribute("webkit-playsinline", "true")
+    video.setAttribute("x5-playsinline", "true")
+    video.setAttribute("x5-video-player-type", "h5")
+    video.setAttribute("x5-video-player-fullscreen", "false")
+
+    // Try to play immediately and keep retrying
     const playVideo = async () => {
       try {
+        video.muted = true // Ensure muted before play
         await video.play()
         setIsVideoReady(true)
       } catch {
-        // Autoplay might be blocked, show video anyway
-        setIsVideoReady(true)
+        // Retry after a short delay (helps on some mobile browsers)
+        setTimeout(async () => {
+          try {
+            video.muted = true
+            await video.play()
+            setIsVideoReady(true)
+          } catch {
+            setIsVideoReady(true)
+          }
+        }, 100)
       }
     }
 
-    // If video is already loaded enough to play
-    if (video.readyState >= 3) {
+    // Play as soon as possible
+    if (video.readyState >= 1) {
       playVideo()
-    } else {
-      video.addEventListener("canplay", () => playVideo(), { once: true })
     }
+    
+    video.addEventListener("loadedmetadata", () => playVideo(), { once: true })
+    video.addEventListener("canplay", () => playVideo(), { once: true })
+
+    // Also try on user interaction (fallback for strict browsers)
+    const handleInteraction = () => {
+      if (video.paused) {
+        playVideo()
+      }
+    }
+    document.addEventListener("touchstart", handleInteraction, { once: true })
+    document.addEventListener("click", handleInteraction, { once: true })
 
     // Loop at 4 seconds
     const handleTimeUpdate = () => {
@@ -42,7 +69,11 @@ export function HeroSection() {
     }
 
     video.addEventListener("timeupdate", handleTimeUpdate)
-    return () => video.removeEventListener("timeupdate", handleTimeUpdate)
+    return () => {
+      video.removeEventListener("timeupdate", handleTimeUpdate)
+      document.removeEventListener("touchstart", handleInteraction)
+      document.removeEventListener("click", handleInteraction)
+    }
   }, [])
 
   return (
@@ -58,6 +89,11 @@ export function HeroSection() {
           muted
           playsInline
           preload="auto"
+          loop
+          disablePictureInPicture
+          disableRemotePlayback
+          // @ts-expect-error - webkit specific attribute
+          webkit-playsinline="true"
           className={`w-full h-full object-cover transition-opacity duration-500 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
         >
           <source src={VIDEO_URL} type="video/mp4" />

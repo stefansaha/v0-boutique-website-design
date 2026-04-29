@@ -82,7 +82,6 @@ export function HeroSection() {
           autoPlay
           muted
           playsInline
-          loop
           preload="auto"
           controls={false}
           style={{

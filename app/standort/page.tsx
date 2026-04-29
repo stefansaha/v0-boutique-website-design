@@ -28,11 +28,38 @@ export default function LocationPage() {
           <div className="container mx-auto px-6 lg:px-12">
             <div className="max-w-3xl">
               <span className="text-accent text-sm tracking-[0.15em] uppercase font-medium">Standort</span>
-              <h1 className="font-serif text-4xl lg:text-5xl text-foreground mt-4 mb-6 leading-tight">
+              <h1 className="font-serif text-4xl lg:text-5xl text-foreground mt-4 mb-4 leading-tight">
                 Komm vorbei.
                 <br />
                 <span className="text-secondary">Die Tür ist offen.</span>
               </h1>
+              <p className="text-muted-foreground text-lg mb-8">
+                Besuche mich in Lauda-Königshofen – ich freue mich auf dich.
+              </p>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
+                <div className="flex flex-col items-center sm:items-start">
+                  <a
+                    href="https://maps.google.com/?q=Hauptstraße+12+97922+Lauda-Königshofen"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center justify-center gap-2.5 px-7 sm:px-9 py-3.5 sm:py-4 bg-[#d4c4b0] text-[#3d3632] font-serif text-sm sm:text-base tracking-wide rounded-full shadow-sm hover:shadow-md hover:bg-[#e0d3c3] hover:-translate-y-0.5 transition-all duration-300 ease-out"
+                  >
+                    <span>In Google Maps öffnen</span>
+                    <svg className="w-4 h-4 opacity-70 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+                  </a>
+                  <span className="text-muted-foreground/70 text-xs sm:text-sm mt-2.5 tracking-wide italic">
+                    Einfach anklicken und direkt navigieren
+                  </span>
+                </div>
+                <Link
+                  href="/termin"
+                  className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 border border-[#c4a47c]/40 text-[#5c524a] font-serif text-sm tracking-wide rounded-full hover:border-[#c4a47c]/70 hover:bg-[#c4a47c]/5 transition-all duration-300"
+                >
+                  <span>Termin vereinbaren</span>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -97,6 +124,14 @@ export default function LocationPage() {
                     </div>
                   </div>
 
+                  {/* Parking */}
+                  <div>
+                    <h2 className="text-sm tracking-[0.1em] uppercase text-muted-foreground mb-4">Parkmöglichkeiten</h2>
+                    <p className="text-foreground leading-relaxed">
+                      Kostenlose Parkplätze direkt in der Innenstadt, nur eine Minute zu Fuß.
+                    </p>
+                  </div>
+
                   {/* Contact */}
                   <div>
                     <h2 className="text-sm tracking-[0.1em] uppercase text-muted-foreground mb-4">Kontakt</h2>
@@ -152,9 +187,12 @@ export default function LocationPage() {
             </p>
             <Link
               href="/kontakt"
-              className="inline-block px-8 py-4 bg-white text-[#2a2a2a] font-medium hover:bg-white/90 transition-colors"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/95 text-[#2a2a2a] font-serif tracking-wide rounded-full hover:bg-white transition-all duration-300 hover:shadow-lg"
             >
-              Nachricht schreiben
+              <span>Nachricht schreiben</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
             </Link>
           </div>
         </section>

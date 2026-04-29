@@ -3,12 +3,22 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 
-const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
+const VIDEO_URL_DESKTOP = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
+const VIDEO_URL_MOBILE = "https://res.cloudinary.com/di8ireioi/video/upload/w_720,q_60/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
 
 export function CTASection() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent))
+    }
+    checkMobile()
+  }, [])
 
   // Use Intersection Observer to play video when section is visible
   useEffect(() => {
@@ -35,64 +45,59 @@ export function CTASection() {
     const video = videoRef.current
     if (!video || !isVisible) return
 
-    // iOS requires these to be set programmatically
+    // Critical iOS settings
+    video.defaultMuted = true
     video.muted = true
     video.playsInline = true
-    video.setAttribute("webkit-playsinline", "true")
-    video.setAttribute("playsinline", "true")
-    video.playbackRate = 0.8
+    video.autoplay = true
     video.loop = true
+    video.preload = "auto"
+    
+    video.setAttribute("muted", "")
+    video.setAttribute("playsinline", "")
+    video.setAttribute("webkit-playsinline", "")
+    video.setAttribute("autoplay", "")
+    
+    video.playbackRate = 0.8
 
-    let hasPlayed = false
+    let playAttempts = 0
+    const maxAttempts = 10
 
     const attemptPlay = async () => {
-      if (hasPlayed) return
+      if (playAttempts >= maxAttempts) return
       
+      playAttempts++
       video.muted = true
+      video.volume = 0
       
       try {
-        const playPromise = video.play()
-        if (playPromise !== undefined) {
-          await playPromise
-          hasPlayed = true
+        if (video.readyState < 2) {
+          video.load()
         }
+        await video.play()
       } catch {
-        // Silently fail
+        setTimeout(attemptPlay, 200)
       }
     }
 
-    video.addEventListener("canplaythrough", attemptPlay)
-    video.addEventListener("canplay", attemptPlay)
-    video.addEventListener("loadeddata", attemptPlay)
-    video.addEventListener("loadedmetadata", attemptPlay)
+    attemptPlay()
 
-    if (video.readyState >= 2) {
-      attemptPlay()
-    }
-
-    // iOS fallback on user interaction
-    const handleUserInteraction = () => {
-      if (!hasPlayed && video.paused) {
-        attemptPlay()
-      }
-    }
-    
-    document.addEventListener("touchstart", handleUserInteraction, { once: true, passive: true })
-    document.addEventListener("scroll", handleUserInteraction, { once: true, passive: true })
+    const onReady = () => attemptPlay()
+    video.addEventListener("loadedmetadata", onReady)
+    video.addEventListener("loadeddata", onReady)
+    video.addEventListener("canplay", onReady)
 
     return () => {
-      video.removeEventListener("canplaythrough", attemptPlay)
-      video.removeEventListener("canplay", attemptPlay)
-      video.removeEventListener("loadeddata", attemptPlay)
-      video.removeEventListener("loadedmetadata", attemptPlay)
-      document.removeEventListener("touchstart", handleUserInteraction)
-      document.removeEventListener("scroll", handleUserInteraction)
+      video.removeEventListener("loadedmetadata", onReady)
+      video.removeEventListener("loadeddata", onReady)
+      video.removeEventListener("canplay", onReady)
     }
   }, [isVisible])
 
   return (
     <section ref={sectionRef} className="relative pt-20 sm:pt-28 pb-24 lg:pb-32 text-white overflow-hidden">
       <div className="absolute inset-0 z-0">
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
           ref={videoRef}
           autoPlay
@@ -101,13 +106,9 @@ export function CTASection() {
           playsInline
           preload="auto"
           controls={false}
-          webkit-playsinline="true"
-          x-webkit-airplay="deny"
-          disablePictureInPicture
-          disableRemotePlayback
           className="w-full h-full object-cover"
         >
-          <source src={VIDEO_URL} type="video/mp4" />
+          <source src={isMobile ? VIDEO_URL_MOBILE : VIDEO_URL_DESKTOP} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-[#1a1a1a]/75" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-[#1a1a1a]/50" />

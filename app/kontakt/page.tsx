@@ -16,7 +16,7 @@ export default function ContactPage() {
       <Navigation />
       <main className="bg-white">
         {/* Hero with Image */}
-        <section className="relative h-[50vh] min-h-[400px]">
+        <section className="relative h-[45vh] sm:h-[50vh] min-h-[350px] sm:min-h-[400px]">
           <Image
             src="/images/kontakt-hero.jpg"
             alt="Kontakt"
@@ -26,10 +26,10 @@ export default function ContactPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/70 via-[#1a1a1a]/40 to-transparent" />
           <div className="absolute inset-0 flex items-center">
-            <div className="container mx-auto px-6 lg:px-12">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-12">
               <div className="max-w-xl">
-                <span className="text-white/60 text-sm tracking-[0.2em] uppercase">Kontakt</span>
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mt-4 leading-[1.1]">
+                <span className="text-white/60 text-xs sm:text-sm tracking-[0.2em] uppercase">Kontakt</span>
+                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mt-3 sm:mt-4 leading-[1.1]">
                   Lass uns reden.
                 </h1>
               </div>
@@ -38,12 +38,12 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Grid */}
-        <section className="py-20 lg:py-28">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <section className="py-12 sm:py-20 lg:py-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
               {/* Form Side */}
               <div className="lg:col-span-7">
-                <p className="text-muted-foreground text-lg mb-10 max-w-lg">
+                <p className="text-muted-foreground text-base sm:text-lg mb-8 sm:mb-10 max-w-lg">
                   Fragen zur Kollektion? Möchtest du einen Beratungstermin? 
                   Oder einfach Hallo sagen? Schreib mir.
                 </p>

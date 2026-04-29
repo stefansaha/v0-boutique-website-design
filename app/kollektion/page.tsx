@@ -42,7 +42,7 @@ export default function CollectionPage() {
       <Navigation />
       <main className="bg-white">
         {/* Hero with Image */}
-        <section className="relative h-[70vh] min-h-[500px]">
+        <section className="relative h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[500px]">
           <Image
             src="/images/kollektion-hero.jpg"
             alt="Kollektion"
@@ -52,10 +52,10 @@ export default function CollectionPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/70 via-[#1a1a1a]/40 to-transparent" />
           <div className="absolute inset-0 flex items-center">
-            <div className="container mx-auto px-6 lg:px-12">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-12">
               <div className="max-w-xl">
-                <span className="text-white/60 text-sm tracking-[0.2em] uppercase">Kollektion</span>
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mt-4 leading-[1.1]">
+                <span className="text-white/60 text-xs sm:text-sm tracking-[0.2em] uppercase">Kollektion</span>
+                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mt-3 sm:mt-4 leading-[1.1]">
                   Weniger ist mehr.
                   <br />
                   <span className="text-white/70">Aber das Wenige muss stimmen.</span>
@@ -66,10 +66,10 @@ export default function CollectionPage() {
         </section>
 
         {/* Intro */}
-        <section className="py-20 lg:py-28">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="py-12 sm:py-20 lg:py-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-3xl mx-auto text-center">
-              <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
+              <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed">
                 Jedes Stück in meiner Boutique habe ich selbst ausgesucht. Ich fahre zu kleinen Herstellern, 
                 fühle jeden Stoff, prüfe jede Naht. Was hier hängt, würde ich selbst tragen.
               </p>
@@ -78,17 +78,17 @@ export default function CollectionPage() {
         </section>
 
         {/* Categories */}
-        <section className="pb-24">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="pb-16 sm:pb-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             {categories.map((category, index) => (
               <div
                 key={category.title}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
-                  index !== categories.length - 1 ? "mb-24 lg:mb-32" : ""
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center ${
+                  index !== categories.length - 1 ? "mb-16 sm:mb-24 lg:mb-32" : ""
                 }`}
               >
                 {/* Image */}
-                <div className={`relative aspect-[4/5] overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""}`}>
+                <div className={`relative aspect-[4/5] sm:aspect-[4/5] overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""}`}>
                   <Image
                     src={category.image}
                     alt={category.title}
@@ -99,14 +99,14 @@ export default function CollectionPage() {
 
                 {/* Content */}
                 <div className={`${index % 2 === 1 ? "lg:order-1 lg:pr-12" : "lg:pl-12"}`}>
-                  <span className="text-secondary text-sm tracking-[0.15em] uppercase">{category.subtitle}</span>
-                  <h2 className="font-serif text-3xl lg:text-4xl text-foreground mt-3 mb-6">
+                  <span className="text-secondary text-xs sm:text-sm tracking-[0.15em] uppercase">{category.subtitle}</span>
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-foreground mt-2 sm:mt-3 mb-4 sm:mb-6">
                     {category.title}
                   </h2>
-                  <p className="text-muted-foreground leading-relaxed text-lg">
+                  <p className="text-muted-foreground leading-relaxed text-base sm:text-lg">
                     {category.description}
                   </p>
-                  <div className="mt-8 w-12 h-px bg-secondary/40" />
+                  <div className="mt-6 sm:mt-8 w-12 h-px bg-secondary/40" />
                 </div>
               </div>
             ))}
@@ -114,11 +114,11 @@ export default function CollectionPage() {
         </section>
 
         {/* Note Section */}
-        <section className="py-24 bg-[#f8f6f3]">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <section className="py-16 sm:py-24 bg-[#f8f6f3]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
               <div>
-                <h2 className="font-serif text-3xl text-foreground mb-6">
+                <h2 className="font-serif text-2xl sm:text-3xl text-foreground mb-4 sm:mb-6">
                   Die Kollektion wechselt
                 </h2>
                 <p className="text-muted-foreground leading-relaxed mb-4">
@@ -153,19 +153,19 @@ export default function CollectionPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-24 bg-[#2a2a2a]">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="py-16 sm:py-24 bg-[#2a2a2a]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-2xl mx-auto text-center">
-              <h2 className="font-serif text-3xl lg:text-4xl text-white mb-6">
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white mb-4 sm:mb-6">
                 Nicht sicher, was dir steht?
               </h2>
-              <p className="text-white/60 mb-10 leading-relaxed">
+              <p className="text-white/60 mb-8 sm:mb-10 leading-relaxed text-sm sm:text-base">
                 Dafür bin ich da. Komm vorbei und wir finden gemeinsam heraus, 
                 welche Schnitte, Farben und Stile dich am besten zur Geltung bringen.
               </p>
               <Link
                 href="/erlebnis"
-                className="inline-block px-10 py-4 bg-white text-[#2a2a2a] font-medium hover:bg-white/90 transition-colors"
+                className="inline-block px-8 sm:px-10 py-3 sm:py-4 bg-white text-[#2a2a2a] font-medium hover:bg-white/90 transition-colors text-sm sm:text-base"
               >
                 So läuft ein Besuch ab
               </Link>

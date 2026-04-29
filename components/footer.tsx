@@ -11,15 +11,15 @@ const footerLinks = [
 export function Footer() {
   return (
     <footer className="bg-[#1a1a1a]">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         {/* Main Footer */}
-        <div className="py-16 lg:py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
+        <div className="py-12 sm:py-16 lg:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
           {/* Brand */}
-          <div className="lg:col-span-5">
-            <Link href="/" className="font-serif text-3xl text-white">
+          <div className="sm:col-span-2 lg:col-span-5">
+            <Link href="/" className="font-serif text-2xl sm:text-3xl text-white">
               Rinabelle
             </Link>
-            <p className="text-white/40 mt-6 max-w-sm leading-relaxed">
+            <p className="text-white/40 mt-4 sm:mt-6 max-w-sm leading-relaxed text-sm sm:text-base">
               Damenmode mit Persönlichkeit.
               <br />
               Persönlich ausgewählt, ehrlich beraten.
@@ -28,7 +28,7 @@ export function Footer() {
               href="https://instagram.com/rinabelle.fashion" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-6 text-white/60 hover:text-white transition-colors text-sm"
+              className="inline-flex items-center gap-2 mt-4 sm:mt-6 text-white/60 hover:text-white transition-colors text-sm"
             >
               Instagram
               <span className="w-4 h-px bg-current" />
@@ -37,13 +37,13 @@ export function Footer() {
 
           {/* Navigation */}
           <div className="lg:col-span-3 lg:col-start-7">
-            <h4 className="text-sm tracking-[0.15em] uppercase text-white/30 mb-6">Navigation</h4>
-            <nav className="flex flex-col gap-4">
+            <h4 className="text-xs sm:text-sm tracking-[0.15em] uppercase text-white/30 mb-4 sm:mb-6">Navigation</h4>
+            <nav className="flex flex-col gap-3 sm:gap-4">
               {footerLinks.map((link) => (
                 <Link 
                   key={link.href}
                   href={link.href} 
-                  className="text-white/60 hover:text-white transition-colors"
+                  className="text-white/60 hover:text-white transition-colors text-sm sm:text-base"
                 >
                   {link.label}
                 </Link>
@@ -53,8 +53,8 @@ export function Footer() {
 
           {/* Contact */}
           <div className="lg:col-span-3">
-            <h4 className="text-sm tracking-[0.15em] uppercase text-white/30 mb-6">Kontakt</h4>
-            <div className="space-y-4 text-white/60">
+            <h4 className="text-xs sm:text-sm tracking-[0.15em] uppercase text-white/30 mb-4 sm:mb-6">Kontakt</h4>
+            <div className="space-y-3 sm:space-y-4 text-white/60 text-sm sm:text-base">
               <p className="leading-relaxed">
                 Hauptstraße 12
                 <br />
@@ -71,9 +71,9 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="py-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/30">
+        <div className="py-4 sm:py-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-white/30">
           <p>&copy; {new Date().getFullYear()} Rinabelle Fashion</p>
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-6 sm:gap-8">
             <Link href="/impressum" className="hover:text-white/60 transition-colors">
               Impressum
             </Link>

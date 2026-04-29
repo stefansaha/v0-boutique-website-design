@@ -24,11 +24,22 @@ export function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // On inner pages, always show dark nav
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
+
   const showDarkNav = !isHomePage || isScrolled
 
   return (
@@ -36,17 +47,17 @@ export function Navigation() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         showDarkNav
-          ? "bg-white/95 backdrop-blur-sm py-4 shadow-sm"
-          : "bg-transparent py-6"
+          ? "bg-white/95 backdrop-blur-sm py-3 sm:py-4 shadow-sm"
+          : "bg-transparent py-4 sm:py-6"
       )}
     >
-      <nav className="container mx-auto px-6 lg:px-12">
+      <nav className="container mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link 
             href="/" 
             className={cn(
-              "font-serif text-2xl tracking-wide transition-colors",
+              "font-serif text-xl sm:text-2xl tracking-wide transition-colors",
               showDarkNav ? "text-foreground" : "text-white"
             )}
           >
@@ -54,13 +65,13 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-8 xl:gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-sm tracking-wide transition-colors relative",
+                  "text-sm tracking-wide transition-colors relative py-2",
                   showDarkNav 
                     ? "text-muted-foreground hover:text-foreground" 
                     : "text-white/80 hover:text-white",
@@ -70,7 +81,7 @@ export function Navigation() {
                 {link.label}
                 {pathname === link.href && (
                   <span className={cn(
-                    "absolute -bottom-1 left-0 right-0 h-px",
+                    "absolute -bottom-0 left-0 right-0 h-px",
                     showDarkNav ? "bg-foreground" : "bg-white"
                   )} />
                 )}
@@ -82,39 +93,43 @@ export function Navigation() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "lg:hidden p-2 transition-colors",
+              "lg:hidden p-2 -mr-2 transition-colors touch-manipulation",
               showDarkNav ? "text-foreground" : "text-white"
             )}
             aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
+            aria-expanded={isOpen}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Full Screen Overlay */}
         <div
           className={cn(
             "lg:hidden fixed inset-0 bg-white z-40 transition-all duration-300 flex flex-col",
             isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           )}
-          style={{ top: "72px" }}
+          style={{ top: "56px" }}
         >
-          <div className="flex flex-col items-center justify-center flex-1 gap-8">
-            {navLinks.map((link) => (
+          <div className="flex flex-col items-center justify-center flex-1 gap-6 sm:gap-8 px-6">
+            {navLinks.map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "font-serif text-2xl text-foreground hover:text-secondary transition-colors",
+                  "font-serif text-2xl sm:text-3xl text-foreground hover:text-secondary transition-colors",
+                  "transform transition-all duration-300",
+                  isOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
                   pathname === link.href && "text-secondary"
                 )}
+                style={{ transitionDelay: isOpen ? `${index * 50}ms` : "0ms" }}
               >
                 {link.label}
               </Link>
             ))}
           </div>
-          <div className="pb-12 text-center">
+          <div className="pb-8 sm:pb-12 text-center">
             <a 
               href="https://instagram.com/rinabelle.fashion" 
               target="_blank" 

@@ -57,7 +57,7 @@ export default function ExperiencePage() {
       <Navigation />
       <main className="bg-white">
         {/* Hero with Image */}
-        <section className="relative h-[70vh] min-h-[500px]">
+        <section className="relative h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[500px]">
           <Image
             src="/images/erlebnis-hero.jpg"
             alt="Boutique Erlebnis"
@@ -67,10 +67,10 @@ export default function ExperiencePage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/70 via-[#1a1a1a]/40 to-transparent" />
           <div className="absolute inset-0 flex items-center">
-            <div className="container mx-auto px-6 lg:px-12">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-12">
               <div className="max-w-xl">
-                <span className="text-white/60 text-sm tracking-[0.2em] uppercase">Dein Besuch</span>
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mt-4 leading-[1.1]">
+                <span className="text-white/60 text-xs sm:text-sm tracking-[0.2em] uppercase">Dein Besuch</span>
+                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mt-3 sm:mt-4 leading-[1.1]">
                   Kein Stress.
                   <br />
                   <span className="text-white/70">Nur Mode und gute Gespräche.</span>
@@ -81,10 +81,10 @@ export default function ExperiencePage() {
         </section>
 
         {/* Intro */}
-        <section className="py-20 lg:py-28">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="py-12 sm:py-20 lg:py-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-3xl mx-auto text-center">
-              <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
+              <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed">
                 Bei mir gibt es keine aufdringlichen Verkäufer, keine überfüllten Regale, keinen Zeitdruck. 
                 Nur eine entspannte Atmosphäre und ehrliche Beratung, wenn du sie möchtest.
               </p>
@@ -93,9 +93,9 @@ export default function ExperiencePage() {
         </section>
 
         {/* Images Grid */}
-        <section className="pb-24">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section className="pb-16 sm:pb-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
                   src="/images/boutique-interior.jpg"
@@ -125,21 +125,21 @@ export default function ExperiencePage() {
         </section>
 
         {/* Steps */}
-        <section className="py-24 bg-[#f8f6f3]">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="py-16 sm:py-24 bg-[#f8f6f3]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16">
-                <h2 className="font-serif text-3xl lg:text-4xl text-foreground">
+              <div className="text-center mb-10 sm:mb-16">
+                <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-foreground">
                   So läuft es ab
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-8 sm:gap-y-12">
                 {steps.map((step) => (
                   <div key={step.number} className="relative">
-                    <span className="font-serif text-5xl text-secondary/30">{step.number}</span>
-                    <h3 className="font-serif text-xl text-foreground mt-2 mb-3">{step.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                    <span className="font-serif text-4xl sm:text-5xl text-secondary/30">{step.number}</span>
+                    <h3 className="font-serif text-lg sm:text-xl text-foreground mt-2 mb-2 sm:mb-3">{step.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">{step.description}</p>
                   </div>
                 ))}
               </div>
@@ -148,15 +148,15 @@ export default function ExperiencePage() {
         </section>
 
         {/* Quote */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="py-16 sm:py-24 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="font-serif text-6xl text-secondary/30 mb-6">&ldquo;</div>
-              <blockquote className="font-serif text-2xl lg:text-3xl text-foreground leading-relaxed">
+              <div className="font-serif text-4xl sm:text-6xl text-secondary/30 mb-4 sm:mb-6">&ldquo;</div>
+              <blockquote className="font-serif text-xl sm:text-2xl lg:text-3xl text-foreground leading-relaxed">
                 Bei Rinabelle fühlt es sich an wie bei einer Freundin vorbeischauen, 
                 die zufällig einen unglaublich guten Geschmack hat.
               </blockquote>
-              <p className="text-muted-foreground mt-8">— Sarah, Stammkundin</p>
+              <p className="text-muted-foreground mt-6 sm:mt-8 text-sm sm:text-base">— Sarah, Stammkundin</p>
             </div>
           </div>
         </section>

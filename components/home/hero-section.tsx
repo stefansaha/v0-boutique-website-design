@@ -4,29 +4,13 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { LoadingScreen } from "@/components/loading-screen"
 
-// ✅ Mobile optimiert (kleiner + kein Audio)
-const VIDEO_URL_MOBILE =
-  "https://res.cloudinary.com/di8ireioi/video/upload/w_720,c_fill,q_auto:low,f_mp4,ac_none/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
-
-// ✅ Desktop höher aufgelöst
-const VIDEO_URL_DESKTOP =
-  "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_auto,f_mp4/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
+// Vercel Blob URLs - besser für iOS Autoplay
+const VIDEO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8386975-uhd_4096_2160_25fps%20%281%29%20%281%29-w0ze6gWvgrrNeCaWGXH3aWF9gfqVHc.mp4"
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isVideoReady, setIsVideoReady] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(
-        window.innerWidth < 768 ||
-        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-      )
-    }
-    checkMobile()
-  }, [])
 
   useEffect(() => {
     const video = videoRef.current
@@ -90,10 +74,7 @@ export function HeroSection() {
               transition: "opacity 0.5s ease",
             }}
           >
-            <source
-              src={isMobile ? VIDEO_URL_MOBILE : VIDEO_URL_DESKTOP}
-              type="video/mp4"
-            />
+            <source src={VIDEO_URL} type="video/mp4" />
           </video>
 
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />

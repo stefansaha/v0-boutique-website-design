@@ -15,41 +15,76 @@ export function HeroSection() {
     const video = videoRef.current
     if (!video) return
 
+    // iOS requires these to be set programmatically as well
+    video.muted = true
+    video.playsInline = true
+    video.setAttribute("webkit-playsinline", "true")
+    video.setAttribute("playsinline", "true")
     video.playbackRate = 0.75
     video.loop = true
 
     let hasPlayed = false
 
-    const attemptPlay = () => {
+    const attemptPlay = async () => {
       if (hasPlayed) return
-      video.play()
-        .then(() => {
+      
+      // Ensure muted before every play attempt (iOS requirement)
+      video.muted = true
+      
+      try {
+        const playPromise = video.play()
+        if (playPromise !== undefined) {
+          await playPromise
           hasPlayed = true
           setIsVideoReady(true)
           setTimeout(() => setIsLoading(false), 300)
-        })
-        .catch(() => {
-          setIsVideoReady(true)
-          setIsLoading(false)
-        })
+        }
+      } catch (err) {
+        // If autoplay fails, still show content
+        setIsVideoReady(true)
+        setIsLoading(false)
+      }
     }
 
-    video.addEventListener("canplay", attemptPlay, { once: true })
-    video.addEventListener("loadedmetadata", attemptPlay, { once: true })
+    // Multiple event listeners for different browser behaviors
+    video.addEventListener("canplaythrough", attemptPlay)
+    video.addEventListener("canplay", attemptPlay)
+    video.addEventListener("loadeddata", attemptPlay)
+    video.addEventListener("loadedmetadata", attemptPlay)
 
-    if (video.readyState >= 3) {
+    // Try immediately if already loaded
+    if (video.readyState >= 2) {
       attemptPlay()
     }
 
+    // Also try on any user interaction (iOS fallback)
+    const handleUserInteraction = () => {
+      if (!hasPlayed && video.paused) {
+        attemptPlay()
+      }
+    }
+    
+    document.addEventListener("touchstart", handleUserInteraction, { once: true, passive: true })
+    document.addEventListener("click", handleUserInteraction, { once: true })
+    document.addEventListener("scroll", handleUserInteraction, { once: true, passive: true })
+
+    // Fallback timer
     const fallbackTimer = setTimeout(() => {
-      setIsLoading(false)
-      setIsVideoReady(true)
+      if (!hasPlayed) {
+        setIsLoading(false)
+        setIsVideoReady(true)
+      }
     }, 4000)
 
     return () => {
       clearTimeout(fallbackTimer)
+      video.removeEventListener("canplaythrough", attemptPlay)
       video.removeEventListener("canplay", attemptPlay)
+      video.removeEventListener("loadeddata", attemptPlay)
       video.removeEventListener("loadedmetadata", attemptPlay)
+      document.removeEventListener("touchstart", handleUserInteraction)
+      document.removeEventListener("click", handleUserInteraction)
+      document.removeEventListener("scroll", handleUserInteraction)
     }
   }, [])
 
@@ -67,6 +102,10 @@ export function HeroSection() {
             playsInline
             preload="auto"
             controls={false}
+            webkit-playsinline="true"
+            x-webkit-airplay="deny"
+            disablePictureInPicture
+            disableRemotePlayback
             style={{
               width: "100%",
               height: "100%",

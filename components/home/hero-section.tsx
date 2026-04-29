@@ -11,9 +11,19 @@ export function HeroSection() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false)
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.8
+    const video = videoRef.current
+    if (!video) return
+
+    video.playbackRate = 0.75
+
+    const handleTimeUpdate = () => {
+      if (video.currentTime >= 4) {
+        video.currentTime = 0
+      }
     }
+
+    video.addEventListener("timeupdate", handleTimeUpdate)
+    return () => video.removeEventListener("timeupdate", handleTimeUpdate)
   }, [])
 
   return (
@@ -36,14 +46,13 @@ export function HeroSection() {
           ref={videoRef}
           autoPlay
           muted
-          loop
           playsInline
           onLoadedData={() => setIsVideoLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? "opacity-100" : "opacity-0"}`}
           poster="/images/hero-boutique.jpg"
         >
           <source
-            src="https://videos.pexels.com/video-files/5706616/5706616-uhd_2560_1440_25fps.mp4"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mp_-RutkdhvTvDPMy1RjySRDMLYCWdnxpL.mp4"
             type="video/mp4"
           />
         </video>

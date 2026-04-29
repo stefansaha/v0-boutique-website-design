@@ -27,9 +27,8 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#1a1a1a] transition-opacity duration-700 ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#000000] transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"
+        }`}
     >
       {/* Elegant loading content */}
       <div className="flex flex-col items-center gap-8">
@@ -37,16 +36,16 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
         <h1 className="font-serif text-white text-3xl sm:text-4xl tracking-wide">
           Rinabelle
         </h1>
-        
+
         {/* Loader */}
-        <TypingDotsLoader 
+        <TypingDotsLoader
           size={32}
-          color="#C88A9B"
+          color="#FFFFFF"
           speed={1.2}
         />
-        
+
         {/* Quote */}
-        <p className="text-white/50 text-sm sm:text-base tracking-wide max-w-xs text-center font-light italic">
+        <p className="text-white text-sm sm:text-base tracking-wide max-w-xs text-center font-light italic">
           Schönheit braucht einen Moment...
         </p>
       </div>

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import Link from "next/link"
 
-const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
+const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
 
 export function CTASection() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -27,9 +27,15 @@ export function CTASection() {
     }
 
     video.addEventListener("canplay", playVideo, { once: true })
+    video.addEventListener("loadedmetadata", playVideo, { once: true })
+
+    if (video.readyState >= 3) {
+      playVideo()
+    }
 
     return () => {
       video.removeEventListener("canplay", playVideo)
+      video.removeEventListener("loadedmetadata", playVideo)
     }
   }, [])
 
@@ -42,7 +48,7 @@ export function CTASection() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           controls={false}
           className="w-full h-full object-cover"
         >

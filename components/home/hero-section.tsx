@@ -13,53 +13,30 @@ export function HeroSection() {
     const video = videoRef.current
     if (!video) return
 
-    // Set playback rate
     video.playbackRate = 0.75
 
-    // Force play on mobile - critical attributes
-    video.muted = true
-    video.playsInline = true
-    video.setAttribute("webkit-playsinline", "true")
-    video.setAttribute("x5-playsinline", "true")
-    video.setAttribute("x5-video-player-type", "h5")
-    video.setAttribute("x5-video-player-fullscreen", "false")
-
-    // Try to play immediately and keep retrying
-    const playVideo = async () => {
-      try {
-        video.muted = true // Ensure muted before play
-        await video.play()
-        setIsVideoReady(true)
-      } catch {
-        // Retry after a short delay (helps on some mobile browsers)
-        setTimeout(async () => {
-          try {
-            video.muted = true
-            await video.play()
+    const attemptPlay = () => {
+      const playPromise = video.play()
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
             setIsVideoReady(true)
-          } catch {
+          })
+          .catch(() => {
+            // Autoplay was prevented, show video anyway
             setIsVideoReady(true)
-          }
-        }, 100)
+          })
       }
     }
 
-    // Play as soon as possible
-    if (video.readyState >= 1) {
-      playVideo()
-    }
-    
-    video.addEventListener("loadedmetadata", () => playVideo(), { once: true })
-    video.addEventListener("canplay", () => playVideo(), { once: true })
+    // Initial attempt
+    attemptPlay()
 
-    // Also try on user interaction (fallback for strict browsers)
-    const handleInteraction = () => {
-      if (video.paused) {
-        playVideo()
-      }
-    }
-    document.addEventListener("touchstart", handleInteraction, { once: true })
-    document.addEventListener("click", handleInteraction, { once: true })
+    // Retry on various events
+    const events = ["loadeddata", "canplay", "canplaythrough"]
+    events.forEach(event => {
+      video.addEventListener(event, attemptPlay, { once: true })
+    })
 
     // Loop at 4 seconds
     const handleTimeUpdate = () => {
@@ -67,39 +44,59 @@ export function HeroSection() {
         video.currentTime = 0
       }
     }
-
     video.addEventListener("timeupdate", handleTimeUpdate)
+
+    // Intersection Observer - play when visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && video.paused) {
+            attemptPlay()
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+    observer.observe(video)
+
     return () => {
       video.removeEventListener("timeupdate", handleTimeUpdate)
-      document.removeEventListener("touchstart", handleInteraction)
-      document.removeEventListener("click", handleInteraction)
+      observer.disconnect()
     }
   }, [])
 
   return (
     <section className="relative h-[100svh] min-h-[500px] sm:min-h-[600px] max-h-[900px]">
-      {/* Preload hint in head */}
-      <link rel="preload" href={VIDEO_URL} as="video" type="video/mp4" />
-      
       {/* Video Background */}
-      <div className="absolute inset-0 bg-[#1a1a1a]">
+      <div className="absolute inset-0 bg-[#1a1a1a] overflow-hidden">
+        {/* 
+          Critical for mobile autoplay:
+          - muted: REQUIRED for autoplay
+          - playsInline: prevents fullscreen on iOS
+          - autoPlay: starts playing
+          - controls={false}: no play button
+          - poster removed to avoid flash
+        */}
         <video
           ref={videoRef}
           autoPlay
           muted
           playsInline
-          preload="auto"
           loop
-          disablePictureInPicture
-          disableRemotePlayback
-          // @ts-expect-error - webkit specific attribute
-          webkit-playsinline="true"
-          className={`w-full h-full object-cover transition-opacity duration-500 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
+          preload="auto"
+          controls={false}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: isVideoReady ? 1 : 0,
+            transition: "opacity 0.5s ease",
+          }}
         >
           <source src={VIDEO_URL} type="video/mp4" />
         </video>
         
-        {/* Overlay - Strong gradient for text readability */}
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/60 via-transparent to-[#1a1a1a]/20" />
       </div>
@@ -141,7 +138,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator - hidden on very small screens */}
+      {/* Scroll indicator */}
       <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
         <div className="w-px h-10 sm:h-12 bg-gradient-to-b from-white/50 to-transparent" />
       </div>

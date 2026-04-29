@@ -19,19 +19,19 @@ export function ContactForm() {
 
   if (isSubmitted) {
     return (
-      <div className="bg-[#f8f6f3] p-10 lg:p-16 text-center">
-        <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-6">
-          <Check className="w-8 h-8 text-secondary" />
+      <div className="bg-[#f8f6f3] p-6 sm:p-10 lg:p-16 rounded-2xl text-center">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#d4c4b0]/30 flex items-center justify-center mx-auto mb-5 sm:mb-6">
+          <Check className="w-7 h-7 sm:w-8 sm:h-8 text-[#8b7355]" />
         </div>
-        <h3 className="font-serif text-2xl text-foreground mb-3">
+        <h3 className="font-serif text-xl sm:text-2xl text-foreground mb-2 sm:mb-3">
           Danke für deine Nachricht
         </h3>
-        <p className="text-muted-foreground mb-8">
+        <p className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-8">
           Ich melde mich so schnell wie möglich bei dir.
         </p>
         <button
           onClick={() => setIsSubmitted(false)}
-          className="text-sm text-secondary hover:text-foreground transition-colors underline underline-offset-4"
+          className="text-sm text-[#8b7355] hover:text-foreground transition-colors underline underline-offset-4"
         >
           Neue Nachricht schreiben
         </button>
@@ -40,8 +40,8 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
         <div>
           <label htmlFor="name" className="block text-sm text-foreground mb-2">
             Name
@@ -51,7 +51,7 @@ export function ContactForm() {
             name="name"
             type="text"
             required
-            className="w-full px-0 py-3 border-0 border-b border-foreground/20 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors"
+            className="w-full px-4 py-3.5 sm:px-0 sm:py-3 border border-foreground/10 sm:border-0 sm:border-b sm:border-foreground/20 rounded-xl sm:rounded-none bg-[#faf9f7] sm:bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground focus:bg-white sm:focus:bg-transparent transition-all text-base"
             placeholder="Dein Name"
           />
         </div>
@@ -64,7 +64,7 @@ export function ContactForm() {
             name="email"
             type="email"
             required
-            className="w-full px-0 py-3 border-0 border-b border-foreground/20 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors"
+            className="w-full px-4 py-3.5 sm:px-0 sm:py-3 border border-foreground/10 sm:border-0 sm:border-b sm:border-foreground/20 rounded-xl sm:rounded-none bg-[#faf9f7] sm:bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground focus:bg-white sm:focus:bg-transparent transition-all text-base"
             placeholder="deine@email.de"
           />
         </div>
@@ -78,7 +78,7 @@ export function ContactForm() {
           id="subject"
           name="subject"
           type="text"
-          className="w-full px-0 py-3 border-0 border-b border-foreground/20 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors"
+          className="w-full px-4 py-3.5 sm:px-0 sm:py-3 border border-foreground/10 sm:border-0 sm:border-b sm:border-foreground/20 rounded-xl sm:rounded-none bg-[#faf9f7] sm:bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground focus:bg-white sm:focus:bg-transparent transition-all text-base"
           placeholder="Optional"
         />
       </div>
@@ -91,17 +91,17 @@ export function ContactForm() {
           id="message"
           name="message"
           required
-          rows={5}
-          className="w-full px-0 py-3 border-0 border-b border-foreground/20 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors resize-none"
+          rows={4}
+          className="w-full px-4 py-3.5 sm:px-0 sm:py-3 border border-foreground/10 sm:border-0 sm:border-b sm:border-foreground/20 rounded-xl sm:rounded-none bg-[#faf9f7] sm:bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground focus:bg-white sm:focus:bg-transparent transition-all resize-none text-base"
           placeholder="Was möchtest du mir sagen?"
         />
       </div>
 
-      <div className="pt-4 flex flex-col items-start">
+      <div className="pt-2 sm:pt-4 flex flex-col items-center sm:items-start">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#d4c4b0] text-[#3d3632] font-serif tracking-wide rounded-full shadow-sm hover:shadow-md hover:bg-[#e0d3c3] hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-sm transition-all duration-300 ease-out"
+          className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#d4c4b0] text-[#3d3632] font-serif tracking-wide rounded-full shadow-sm hover:shadow-md hover:bg-[#e0d3c3] hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-sm transition-all duration-300 ease-out text-base"
         >
           <span>{isSubmitting ? "Wird gesendet..." : "Nachricht senden"}</span>
           {!isSubmitting && (

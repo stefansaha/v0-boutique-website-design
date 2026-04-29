@@ -49,13 +49,8 @@ export function HeroSection() {
       setIsVideoReady(true)
     }, 4000)
 
-    // Loop at 20 seconds
-    const handleTimeUpdate = () => {
-      if (video.currentTime >= 4) {
-        video.currentTime = 0
-      }
-    }
-    video.addEventListener("timeupdate", handleTimeUpdate)
+    // Loop video when it ends (native loop attribute handles this)
+    video.loop = true
 
     // Intersection Observer - play when visible
     const observer = new IntersectionObserver(
@@ -72,7 +67,6 @@ export function HeroSection() {
 
     return () => {
       clearTimeout(fallbackTimer)
-      video.removeEventListener("timeupdate", handleTimeUpdate)
       observer.disconnect()
     }
   }, [])

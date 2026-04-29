@@ -3,22 +3,13 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 
-const VIDEO_URL_DESKTOP = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
-const VIDEO_URL_MOBILE = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
+// Vercel Blob URL - besser für iOS Autoplay
+const VIDEO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5704899-uhd_4096_2160_24fps%20%281%29-4x9TYP7x6hUlQyIHdXXUnGOqdeGJUX.mp4"
 
 export function CTASection() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-
-  // Detect mobile on mount
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent))
-    }
-    checkMobile()
-  }, [])
 
   // Use Intersection Observer to play video when section is visible
   useEffect(() => {
@@ -108,7 +99,7 @@ export function CTASection() {
           controls={false}
           className="w-full h-full object-cover"
         >
-          <source src={isMobile ? VIDEO_URL_MOBILE : VIDEO_URL_DESKTOP} type="video/mp4" />
+          <source src={VIDEO_URL} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-[#1a1a1a]/75" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-[#1a1a1a]/50" />

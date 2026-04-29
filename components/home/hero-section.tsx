@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { LoadingScreen } from "@/components/loading-screen"
 
-const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
+const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)

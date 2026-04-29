@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import Link from "next/link"
 
-const VIDEO_URL = "https://deine-echte-url.mp4"
+const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
 
 export function CTASection() {
   const videoRef = useRef<HTMLVideoElement>(null)

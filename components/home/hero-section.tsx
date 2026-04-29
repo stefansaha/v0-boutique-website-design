@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 
-const VIDEO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mp_-RutkdhvTvDPMy1RjySRDMLYCWdnxpL.mp4"
+const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -94,7 +94,7 @@ export function HeroSection() {
         >
           <source src={VIDEO_URL} type="video/mp4" />
         </video>
-        
+
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/60 via-transparent to-[#1a1a1a]/20" />
@@ -115,7 +115,7 @@ export function HeroSection() {
             </h1>
 
             <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-md">
-              Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen. 
+              Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen.
               Komm vorbei.
             </p>
 

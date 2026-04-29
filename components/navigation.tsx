@@ -28,7 +28,6 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden"
@@ -40,7 +39,6 @@ export function Navigation() {
     }
   }, [isOpen])
 
-  // Close menu on route change
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
@@ -51,10 +49,10 @@ export function Navigation() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           showDarkNav
-            ? "bg-white/95 backdrop-blur-md py-3 shadow-sm"
-            : "bg-gradient-to-b from-black/30 to-transparent py-4 sm:py-5"
+            ? "bg-white py-4 shadow-sm"
+            : "bg-transparent py-5 sm:py-6"
         )}
       >
         <nav className="container mx-auto px-5 sm:px-6 lg:px-12">
@@ -63,7 +61,7 @@ export function Navigation() {
             <Link 
               href="/" 
               className={cn(
-                "font-serif text-xl sm:text-2xl tracking-wide transition-colors",
+                "font-serif text-xl sm:text-2xl tracking-wide transition-colors duration-300",
                 showDarkNav ? "text-foreground" : "text-white"
               )}
             >
@@ -71,23 +69,32 @@ export function Navigation() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
+            <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "px-4 py-2 text-sm tracking-wide transition-all duration-200 relative rounded-full",
+                    "relative text-sm tracking-wide transition-colors duration-300 py-2",
                     showDarkNav 
                       ? pathname === link.href
-                        ? "text-foreground bg-muted"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
                       : pathname === link.href
-                        ? "text-white bg-white/15"
-                        : "text-white/80 hover:text-white hover:bg-white/10"
+                        ? "text-white"
+                        : "text-white/70 hover:text-white"
                   )}
                 >
                   {link.label}
+                  {/* Active indicator line */}
+                  <span 
+                    className={cn(
+                      "absolute -bottom-0.5 left-0 h-px transition-all duration-300",
+                      pathname === link.href 
+                        ? "w-full bg-current" 
+                        : "w-0 bg-current group-hover:w-full"
+                    )}
+                  />
                 </Link>
               ))}
             </div>
@@ -96,72 +103,77 @@ export function Navigation() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={cn(
-                "lg:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5 transition-colors z-50",
+                "lg:hidden relative w-10 h-10 flex items-center justify-center transition-colors z-50",
                 isOpen ? "text-foreground" : showDarkNav ? "text-foreground" : "text-white"
               )}
               aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
               aria-expanded={isOpen}
             >
-              <span 
-                className={cn(
-                  "w-6 h-0.5 bg-current transition-all duration-300 origin-center",
-                  isOpen && "rotate-45 translate-y-2"
-                )} 
-              />
-              <span 
-                className={cn(
-                  "w-6 h-0.5 bg-current transition-all duration-300",
-                  isOpen && "opacity-0 scale-0"
-                )} 
-              />
-              <span 
-                className={cn(
-                  "w-6 h-0.5 bg-current transition-all duration-300 origin-center",
-                  isOpen && "-rotate-45 -translate-y-2"
-                )} 
-              />
+              <div className="relative w-6 h-5">
+                <span 
+                  className={cn(
+                    "absolute left-0 w-6 h-0.5 bg-current transition-all duration-300",
+                    isOpen ? "top-2 rotate-45" : "top-0"
+                  )} 
+                />
+                <span 
+                  className={cn(
+                    "absolute left-0 top-2 w-6 h-0.5 bg-current transition-all duration-300",
+                    isOpen ? "opacity-0" : "opacity-100"
+                  )} 
+                />
+                <span 
+                  className={cn(
+                    "absolute left-0 w-6 h-0.5 bg-current transition-all duration-300",
+                    isOpen ? "top-2 -rotate-45" : "top-4"
+                  )} 
+                />
+              </div>
             </button>
           </div>
         </nav>
       </header>
 
-      {/* Mobile Navigation - Full Screen Overlay */}
+      {/* Mobile Navigation Overlay */}
       <div
         className={cn(
-          "lg:hidden fixed inset-0 z-40 transition-all duration-500 ease-out",
+          "lg:hidden fixed inset-0 z-40 transition-all duration-400",
           isOpen ? "pointer-events-auto" : "pointer-events-none"
         )}
       >
         {/* Backdrop */}
         <div 
           className={cn(
-            "absolute inset-0 bg-white transition-opacity duration-500",
+            "absolute inset-0 bg-[#faf9f7] transition-opacity duration-400",
             isOpen ? "opacity-100" : "opacity-0"
           )}
           onClick={() => setIsOpen(false)}
         />
         
         {/* Content */}
-        <div className="relative h-full flex flex-col pt-24 pb-12 px-8">
-          <nav className="flex-1 flex flex-col justify-center">
-            <ul className="space-y-2">
+        <div className="relative h-full flex flex-col justify-between pt-28 pb-10 px-8">
+          <nav>
+            <ul className="space-y-1">
               {navLinks.map((link, index) => (
-                <li key={link.href}>
+                <li 
+                  key={link.href}
+                  className={cn(
+                    "overflow-hidden transition-all duration-400",
+                    isOpen ? "opacity-100" : "opacity-0"
+                  )}
+                  style={{ 
+                    transitionDelay: isOpen ? `${50 + index * 40}ms` : "0ms" 
+                  }}
+                >
                   <Link
                     href={link.href}
                     onClick={() => setIsOpen(false)}
                     className={cn(
-                      "block py-3 font-serif text-3xl sm:text-4xl transition-all duration-500",
-                      isOpen 
-                        ? "opacity-100 translate-x-0" 
-                        : "opacity-0 -translate-x-8",
+                      "block py-4 font-serif text-3xl transition-colors border-b border-border/30",
                       pathname === link.href 
                         ? "text-secondary" 
-                        : "text-foreground hover:text-secondary"
+                        : "text-foreground active:text-secondary"
                     )}
-                    style={{ 
-                      transitionDelay: isOpen ? `${100 + index * 50}ms` : "0ms" 
-                    }}
                   >
                     {link.label}
                   </Link>
@@ -170,25 +182,26 @@ export function Navigation() {
             </ul>
           </nav>
           
-          {/* Footer info */}
+          {/* Footer */}
           <div 
             className={cn(
-              "transition-all duration-500 border-t border-border pt-6",
-              isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              "transition-all duration-400",
+              isOpen ? "opacity-100" : "opacity-0"
             )}
-            style={{ transitionDelay: isOpen ? "400ms" : "0ms" }}
+            style={{ transitionDelay: isOpen ? "300ms" : "0ms" }}
           >
-            <a 
-              href="https://instagram.com/rinabelle.fashion" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              @rinabelle.fashion
-            </a>
-            <p className="text-xs text-muted-foreground mt-2">
-              Lauda-Königshofen
-            </p>
+            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <a 
+                href="https://instagram.com/rinabelle.fashion" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                Instagram
+              </a>
+              <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+              <span>Lauda-Königshofen</span>
+            </div>
           </div>
         </div>
       </div>

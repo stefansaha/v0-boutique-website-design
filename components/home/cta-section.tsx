@@ -5,7 +5,7 @@ import { ShapeGrid } from "@/components/ui/shape-grid"
 
 export function CTASection() {
   return (
-    <section className="relative pt-16 sm:pt-20 pb-24 lg:pb-32 bg-gradient-to-br from-[#2a2a2a] via-[#1f1f1f] to-[#1a1a1a] text-white overflow-hidden -mt-1">
+    <section className="relative pt-20 sm:pt-28 pb-24 lg:pb-32 bg-gradient-to-br from-[#2a2a2a] via-[#1f1f1f] to-[#1a1a1a] text-white overflow-hidden">
       {/* Shape Grid Background */}
       <div className="absolute inset-0 opacity-40">
         <ShapeGrid
@@ -17,7 +17,7 @@ export function CTASection() {
       </div>
 
       {/* Gradient overlays for depth */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-[#1a1a1a]/50 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent pointer-events-none" />
       
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-12">
         <div className="max-w-4xl mx-auto">

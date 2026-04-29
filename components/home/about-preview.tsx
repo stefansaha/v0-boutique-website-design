@@ -6,8 +6,6 @@ import Link from "next/link"
 export function AboutPreview() {
   return (
     <section className="relative py-24 lg:py-32 bg-[#f8f6f3]">
-      {/* Bottom gradient transition to dark CTA section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 sm:h-48 bg-gradient-to-b from-transparent via-[#f8f6f3]/50 to-[#2a2a2a] pointer-events-none" />
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image Side */}
@@ -59,6 +57,22 @@ export function AboutPreview() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* Curved SVG transition to dark section */}
+      <div className="absolute -bottom-1 left-0 right-0 overflow-hidden">
+        <svg 
+          viewBox="0 0 1440 120" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-auto"
+          preserveAspectRatio="none"
+        >
+          <path 
+            d="M0 120V60C240 20 480 0 720 0C960 0 1200 20 1440 60V120H0Z" 
+            fill="#2a2a2a"
+          />
+        </svg>
       </div>
     </section>
   )

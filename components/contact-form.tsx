@@ -97,14 +97,22 @@ export function ContactForm() {
         />
       </div>
 
-      <div className="pt-4">
+      <div className="pt-4 flex flex-col items-start">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-10 py-4 bg-[#2a2a2a] text-white font-medium hover:bg-[#1a1a1a] disabled:opacity-50 transition-colors"
+          className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#d4c4b0] text-[#3d3632] font-serif tracking-wide rounded-full shadow-sm hover:shadow-md hover:bg-[#e0d3c3] hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-sm transition-all duration-300 ease-out"
         >
-          {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
+          <span>{isSubmitting ? "Wird gesendet..." : "Nachricht senden"}</span>
+          {!isSubmitting && (
+            <svg className="w-4 h-4 opacity-70 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+            </svg>
+          )}
         </button>
+        <span className="text-muted-foreground/60 text-xs sm:text-sm mt-3 tracking-wide italic">
+          Antwort meist innerhalb von 24h
+        </span>
       </div>
     </form>
   )

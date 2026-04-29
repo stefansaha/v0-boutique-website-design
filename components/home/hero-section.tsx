@@ -3,16 +3,38 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 
+const VIDEO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mp_-RutkdhvTvDPMy1RjySRDMLYCWdnxpL.mp4"
+
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+  const [isVideoReady, setIsVideoReady] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
 
+    // Set playback rate
     video.playbackRate = 0.75
 
+    // Try to play immediately
+    const playVideo = async () => {
+      try {
+        await video.play()
+        setIsVideoReady(true)
+      } catch {
+        // Autoplay might be blocked, show video anyway
+        setIsVideoReady(true)
+      }
+    }
+
+    // If video is already loaded enough to play
+    if (video.readyState >= 3) {
+      playVideo()
+    } else {
+      video.addEventListener("canplay", () => playVideo(), { once: true })
+    }
+
+    // Loop at 4 seconds
     const handleTimeUpdate = () => {
       if (video.currentTime >= 4) {
         video.currentTime = 0
@@ -25,20 +47,20 @@ export function HeroSection() {
 
   return (
     <section className="relative h-[100svh] min-h-[500px] sm:min-h-[600px] max-h-[900px]">
+      {/* Preload hint in head */}
+      <link rel="preload" href={VIDEO_URL} as="video" type="video/mp4" />
+      
       {/* Video Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-[#1a1a1a]">
         <video
           ref={videoRef}
           autoPlay
           muted
           playsInline
-          onLoadedData={() => setIsVideoLoaded(true)}
-          className={`w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? "opacity-100" : "opacity-0"}`}
+          preload="auto"
+          className={`w-full h-full object-cover transition-opacity duration-500 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
         >
-          <source
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mp_-RutkdhvTvDPMy1RjySRDMLYCWdnxpL.mp4"
-            type="video/mp4"
-          />
+          <source src={VIDEO_URL} type="video/mp4" />
         </video>
         
         {/* Overlay - Strong gradient for text readability */}

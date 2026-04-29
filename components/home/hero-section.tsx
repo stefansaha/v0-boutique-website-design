@@ -100,7 +100,7 @@ export function HeroSection() {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             controls={false}
             webkit-playsinline="true"
             x-webkit-airplay="deny"
@@ -136,6 +136,7 @@ export function HeroSection() {
 
               <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-md">
                 Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen. Komm vorbei.
+                zum Wohlfühlen. Komm vorbei.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">

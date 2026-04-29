@@ -1,155 +1,68 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { LoadingScreen } from "@/components/loading-screen"
-
-const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
+import Image from "next/image"
 
 export function HeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [isVideoReady, setIsVideoReady] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    video.playbackRate = 0.75
-
-    const attemptPlay = () => {
-      const playPromise = video.play()
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsVideoReady(true)
-            // Small delay before hiding loader for smoother transition
-            setTimeout(() => setIsLoading(false), 300)
-          })
-          .catch(() => {
-            // Autoplay was prevented, show video anyway
-            setIsVideoReady(true)
-            setIsLoading(false)
-          })
-      }
-    }
-
-    // Initial attempt
-    attemptPlay()
-
-    // Retry on various events
-    const events = ["loadeddata", "canplay", "canplaythrough"]
-    events.forEach(event => {
-      video.addEventListener(event, attemptPlay, { once: true })
-    })
-
-    // Fallback: hide loader after max 4 seconds even if video doesn't load
-    const fallbackTimer = setTimeout(() => {
-      setIsLoading(false)
-      setIsVideoReady(true)
-    }, 4000)
-
-    // Loop at 20 seconds
-    const handleTimeUpdate = () => {
-      if (video.currentTime >= 20) {
-        video.currentTime = 0
-      }
-    }
-    video.addEventListener("timeupdate", handleTimeUpdate)
-
-    // Intersection Observer - play when visible
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && video.paused) {
-            attemptPlay()
-          }
-        })
-      },
-      { threshold: 0.5 }
-    )
-    observer.observe(video)
-
-    return () => {
-      clearTimeout(fallbackTimer)
-      video.removeEventListener("timeupdate", handleTimeUpdate)
-      observer.disconnect()
-    }
-  }, [])
-
   return (
-    <>
-      {/* Loading Screen */}
-      <LoadingScreen isLoading={isLoading} />
+    <section className="relative h-[100svh] min-h-[500px] sm:min-h-[600px] max-h-[900px]">
+      {/* Image Background */}
+      <div className="absolute inset-0 bg-[#1a1a1a] overflow-hidden">
+        <Image
+          src="/images/hero-boutique.jpg"
+          alt="Rinabelle Fashion Boutique"
+          fill
+          className="object-cover"
+          priority
+          quality={90}
+        />
 
-      <section className="relative h-[100svh] min-h-[500px] sm:min-h-[600px] max-h-[900px]">
-        {/* Video Background */}
-        <div className="absolute inset-0 bg-[#000000] overflow-hidden">
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            controls={false}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              opacity: isVideoReady ? 1 : 0,
-              transition: "opacity 0.5s ease",
-            }}
-          >
-            <source src={VIDEO_URL} type="video/mp4" />
-          </video>
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/60 via-transparent to-[#1a1a1a]/20" />
+      </div>
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/60 via-transparent to-[#1a1a1a]/20" />
-        </div>
+      {/* Content */}
+      <div className="relative h-full flex items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="max-w-xl">
+            <span className="inline-block text-white/70 text-xs sm:text-sm tracking-[0.2em] uppercase mb-4 sm:mb-6">
+              Lauda-Königshofen
+            </span>
 
-        {/* Content */}
-        <div className="relative h-full flex items-center">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="max-w-xl">
-              <span className="inline-block text-white/70 text-xs sm:text-sm tracking-[0.2em] uppercase mb-4 sm:mb-6">
-                Lauda-Königshofen
-              </span>
+            <h1 className="font-serif text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] mb-4 sm:mb-6">
+              Mode, die sich
+              <br />
+              <span className="italic">anfühlt wie du</span>
+            </h1>
 
-              <h1 className="font-serif text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] mb-4 sm:mb-6">
-                Mode, die sich
-                <br />
-                <span className="italic">anfühlt wie du</span>
-              </h1>
+            <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-md">
+              Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen.
+              Komm vorbei.
+            </p>
 
-              <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-md">
-                Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen.
-                Komm vorbei.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link
-                  href="/kollektion"
-                  className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#1a1a1a] font-medium hover:bg-white/90 transition-colors text-center"
-                >
-                  Kollektion ansehen
-                </Link>
-                <Link
-                  href="/standort"
-                  className="px-6 sm:px-8 py-3 sm:py-4 border border-white/40 text-white font-medium hover:bg-white/10 transition-colors text-center"
-                >
-                  Boutique finden
-                </Link>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <Link
+                href="/kollektion"
+                className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#1a1a1a] font-medium hover:bg-white/90 transition-colors text-center"
+              >
+                Kollektion ansehen
+              </Link>
+              <Link
+                href="/standort"
+                className="px-6 sm:px-8 py-3 sm:py-4 border border-white/40 text-white font-medium hover:bg-white/10 transition-colors text-center"
+              >
+                Boutique finden
+              </Link>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
-          <div className="w-px h-10 sm:h-12 bg-gradient-to-b from-white/50 to-transparent" />
-        </div>
-      </section>
-    </>
+      {/* Scroll indicator */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
+        <div className="w-px h-10 sm:h-12 bg-gradient-to-b from-white/50 to-transparent" />
+      </div>
+    </section>
   )
 }

@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { LoadingScreen } from "@/components/loading-screen"
 
-const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
+const VIDEO_URL =
+  "https://res.cloudinary.com/di8ireioi/video/upload/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -16,58 +17,37 @@ export function HeroSection() {
     if (!video) return
 
     video.playbackRate = 0.75
+    video.loop = true
+
+    let hasPlayed = false
 
     const attemptPlay = () => {
+      if (hasPlayed) return
       const playPromise = video.play()
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
+            hasPlayed = true
             setIsVideoReady(true)
-            // Small delay before hiding loader for smoother transition
             setTimeout(() => setIsLoading(false), 300)
           })
           .catch(() => {
-            // Autoplay was prevented, show video anyway
             setIsVideoReady(true)
             setIsLoading(false)
           })
       }
     }
 
-    // Initial attempt
-    attemptPlay()
+    video.addEventListener("canplay", attemptPlay, { once: true })
 
-    // Retry on various events
-    const events = ["loadeddata", "canplay", "canplaythrough"]
-    events.forEach(event => {
-      video.addEventListener(event, attemptPlay, { once: true })
-    })
-
-    // Fallback: hide loader after max 4 seconds even if video doesn't load
     const fallbackTimer = setTimeout(() => {
       setIsLoading(false)
       setIsVideoReady(true)
     }, 4000)
 
-    // Loop video when it ends (native loop attribute handles this)
-    video.loop = true
-
-    // Intersection Observer - play when visible
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && video.paused) {
-            attemptPlay()
-          }
-        })
-      },
-      { threshold: 0.5 }
-    )
-    observer.observe(video)
-
     return () => {
       clearTimeout(fallbackTimer)
-      observer.disconnect()
+      video.removeEventListener("canplay", attemptPlay)
     }
   }, [])
 
@@ -83,8 +63,9 @@ export function HeroSection() {
             ref={videoRef}
             autoPlay
             muted
+            loop
             playsInline
-            preload="auto"
+            preload="metadata"
             controls={false}
             style={{
               width: "100%",
@@ -117,8 +98,8 @@ export function HeroSection() {
               </h1>
 
               <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-md">
-                Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen.
-                Komm vorbei.
+                Persönliche Beratung, handverlesene Stücke und eine Atmosphäre
+                zum Wohlfühlen. Komm vorbei.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">

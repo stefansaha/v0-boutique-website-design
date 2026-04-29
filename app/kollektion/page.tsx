@@ -56,10 +56,16 @@ export default function CollectionPage() {
               <div className="max-w-xl">
                 <span className="text-white/60 text-xs sm:text-sm tracking-[0.2em] uppercase">Kollektion</span>
                 <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mt-3 sm:mt-4 leading-[1.1]">
-                  Weniger ist mehr.
+                  Finde dein perfektes Outfit –
                   <br />
-                  <span className="text-white/70">Aber das Wenige muss stimmen.</span>
+                  <span className="text-white/70">persönlich beraten in Lauda-Königshofen</span>
                 </h1>
+                <Link
+                  href="/termin"
+                  className="inline-block mt-6 sm:mt-8 px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#1a1a1a] font-medium hover:bg-white/90 transition-colors"
+                >
+                  Termin vereinbaren
+                </Link>
               </div>
             </div>
           </div>
@@ -73,6 +79,15 @@ export default function CollectionPage() {
                 Jedes Stück in meiner Boutique habe ich selbst ausgesucht. Ich fahre zu kleinen Herstellern, 
                 fühle jeden Stoff, prüfe jede Naht. Was hier hängt, würde ich selbst tragen.
               </p>
+              <p className="text-base sm:text-lg text-muted-foreground mt-4">
+                Buche deinen Termin und finde dein Outfit in entspannter Atmosphäre.
+              </p>
+              <Link
+                href="/termin"
+                className="inline-block mt-6 sm:mt-8 px-6 sm:px-8 py-3 sm:py-4 bg-[#1a1a1a] text-white font-medium hover:bg-[#2a2a2a] transition-colors"
+              >
+                Jetzt Termin buchen
+              </Link>
             </div>
           </div>
         </section>

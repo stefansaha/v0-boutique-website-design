@@ -30,20 +30,20 @@ export function AboutPreview() {
           {/* Text Side */}
           <div className="lg:pl-8">
             <span className="text-accent text-sm tracking-[0.15em] uppercase font-medium">Die Geschichte</span>
-            
+
             <h2 className="font-serif text-3xl lg:text-4xl text-foreground mt-4 mb-6 leading-snug">
               Ein kleiner Laden mit
               <br />
               großem Herz
             </h2>
-            
+
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                Als ich Rinabelle eröffnete, hatte ich einen einfachen Gedanken: Mode muss sich 
+                Als ich Rinabelle eröffnete, hatte ich einen einfachen Gedanken: Mode muss sich
                 gut anfühlen. Nicht nur auf der Haut, sondern im ganzen Selbst.
               </p>
               <p>
-                Hier gibt es keine aufdringliche Verkaufsmasche. Hier gibt es ehrliche Meinungen, 
+                Hier gibt es keine aufdringliche Verkaufsmasche. Hier gibt es ehrliche Meinungen,
                 einen Kaffee wenn du magst, und die Zeit, die du brauchst.
               </p>
             </div>
@@ -59,21 +59,7 @@ export function AboutPreview() {
         </div>
       </div>
 
-      {/* Curved SVG transition to dark section */}
-      <div className="absolute -bottom-1 left-0 right-0 overflow-hidden">
-        <svg 
-          viewBox="0 0 1440 120" 
-          fill="none" 
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-auto"
-          preserveAspectRatio="none"
-        >
-          <path 
-            d="M0 120V60C240 20 480 0 720 0C960 0 1200 20 1440 60V120H0Z" 
-            fill="#2a2a2a"
-          />
-        </svg>
-      </div>
+
     </section>
   )
 }

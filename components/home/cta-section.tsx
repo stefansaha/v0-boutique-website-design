@@ -7,15 +7,12 @@ export function CTASection() {
   return (
     <section className="relative py-24 lg:py-32 bg-gradient-to-br from-[#2a2a2a] via-[#1f1f1f] to-[#1a1a1a] text-white overflow-hidden">
       {/* Shape Grid Background */}
-      <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 opacity-40">
         <ShapeGrid
           direction="diagonal"
-          speed={0.3}
-          squareSize={50}
-          borderColor="rgba(200, 138, 155, 0.15)"
-          hoverFillColor="rgba(200, 138, 155, 0.3)"
-          shape="square"
-          hoverTrailAmount={8}
+          speed={0.2}
+          squareSize={60}
+          borderColor="rgba(200, 138, 155, 0.12)"
         />
       </div>
 

@@ -39,7 +39,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
 
         {/* Loader */}
         <TypingDotsLoader
-          size={32}
+          size={128}
           color="#FFFFFF"
           speed={1.2}
         />

@@ -4,9 +4,13 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { LoadingScreen } from "@/components/loading-screen"
 
-// Use smaller mobile-optimized video for iOS
-const VIDEO_URL_DESKTOP = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
-const VIDEO_URL_MOBILE = "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_80/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
+// ✅ Mobile optimiert (kleiner + kein Audio)
+const VIDEO_URL_MOBILE =
+  "https://res.cloudinary.com/di8ireioi/video/upload/w_720,c_fill,q_auto:low,f_mp4,ac_none/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
+
+// ✅ Desktop höher aufgelöst
+const VIDEO_URL_DESKTOP =
+  "https://res.cloudinary.com/di8ireioi/video/upload/w_1920,q_auto,f_mp4/v1777471458/8386975-uhd_4096_2160_25fps_pqvqw6.mp4"
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -14,10 +18,12 @@ export function HeroSection() {
   const [isLoading, setIsLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Detect mobile on mount
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent))
+      setIsMobile(
+        window.innerWidth < 768 ||
+        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      )
     }
     checkMobile()
   }, [])
@@ -26,73 +32,38 @@ export function HeroSection() {
     const video = videoRef.current
     if (!video) return
 
-    // Critical iOS settings - must be set before any play attempt
-    video.defaultMuted = true
+    // ✅ iOS Autoplay Anforderungen
     video.muted = true
+    video.defaultMuted = true
     video.playsInline = true
-    video.autoplay = true
-    video.loop = true
-    video.preload = "auto"
 
-    // Set attributes directly on element
     video.setAttribute("muted", "")
     video.setAttribute("playsinline", "")
     video.setAttribute("webkit-playsinline", "")
-    video.setAttribute("autoplay", "")
 
-    video.playbackRate = 0.75
-
-    let playAttempts = 0
-    const maxAttempts = 10
-
-    const attemptPlay = async () => {
-      if (playAttempts >= maxAttempts) {
-        setIsVideoReady(true)
-        setIsLoading(false)
-        return
-      }
-
-      playAttempts++
-
-      // Re-ensure muted state (iOS is picky)
-      video.muted = true
-      video.volume = 0
-
+    const tryPlay = async () => {
       try {
-        // Load the video first
-        if (video.readyState < 2) {
-          video.load()
-        }
-
         await video.play()
         setIsVideoReady(true)
         setTimeout(() => setIsLoading(false), 200)
       } catch {
-        // Retry after short delay
-        setTimeout(attemptPlay, 200)
+        // Falls iOS blockiert → UI trotzdem anzeigen
+        setIsVideoReady(true)
+        setIsLoading(false)
       }
     }
 
-    // Start attempting immediately
-    attemptPlay()
+    video.addEventListener("canplay", tryPlay, { once: true })
+    tryPlay()
 
-    // Also listen for various ready states
-    const onReady = () => attemptPlay()
-    video.addEventListener("loadedmetadata", onReady)
-    video.addEventListener("loadeddata", onReady)
-    video.addEventListener("canplay", onReady)
-
-    // Fallback timer - show content even if video fails
-    const fallbackTimer = setTimeout(() => {
+    const fallback = setTimeout(() => {
       setIsLoading(false)
       setIsVideoReady(true)
-    }, 3000)
+    }, 2500)
 
     return () => {
-      clearTimeout(fallbackTimer)
-      video.removeEventListener("loadedmetadata", onReady)
-      video.removeEventListener("loadeddata", onReady)
-      video.removeEventListener("canplay", onReady)
+      clearTimeout(fallback)
+      video.removeEventListener("canplay", tryPlay)
     }
   }, [isMobile])
 
@@ -109,8 +80,8 @@ export function HeroSection() {
             muted
             loop
             playsInline
-            preload="auto"
-            controls={false}
+            preload="metadata"
+            poster="/hero-poster.jpg" // ✅ wichtig für iOS
             style={{
               width: "100%",
               height: "100%",
@@ -119,7 +90,10 @@ export function HeroSection() {
               transition: "opacity 0.5s ease",
             }}
           >
-            <source src={isMobile ? VIDEO_URL_MOBILE : VIDEO_URL_DESKTOP} type="video/mp4" />
+            <source
+              src={isMobile ? VIDEO_URL_MOBILE : VIDEO_URL_DESKTOP}
+              type="video/mp4"
+            />
           </video>
 
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
@@ -141,14 +115,19 @@ export function HeroSection() {
 
               <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-md">
                 Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen. Komm vorbei.
-                zum Wohlfühlen. Komm vorbei.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link href="/kollektion" className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#1a1a1a] font-medium hover:bg-white/90 transition-colors text-center">
+                <Link
+                  href="/kollektion"
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#1a1a1a] font-medium hover:bg-white/90 transition-colors text-center"
+                >
                   Kollektion ansehen
                 </Link>
-                <Link href="/standort" className="px-6 sm:px-8 py-3 sm:py-4 border border-white/40 text-white font-medium hover:bg-white/10 transition-colors text-center">
+                <Link
+                  href="/standort"
+                  className="px-6 sm:px-8 py-3 sm:py-4 border border-white/40 text-white font-medium hover:bg-white/10 transition-colors text-center"
+                >
                   Boutique finden
                 </Link>
               </div>

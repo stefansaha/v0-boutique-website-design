@@ -1,9 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -26,27 +24,16 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-[100svh] flex items-center">
-      {/* Background Video */}
+    <section className="relative h-screen min-h-[600px] max-h-[900px]">
+      {/* Video Background */}
       <div className="absolute inset-0">
-        <Image
-          src="/images/hero-boutique.jpg"
-          alt="Rinabelle Fashion Boutique"
-          fill
-          className={`object-cover transition-opacity duration-1000 ${isVideoLoaded ? "opacity-0" : "opacity-100"}`}
-          priority
-          quality={100}
-          sizes="100vw"
-        />
-        
         <video
           ref={videoRef}
           autoPlay
           muted
           playsInline
           onLoadedData={() => setIsVideoLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? "opacity-100" : "opacity-0"}`}
-          poster="/images/hero-boutique.jpg"
+          className={`w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? "opacity-100" : "opacity-0"}`}
         >
           <source
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mp_-RutkdhvTvDPMy1RjySRDMLYCWdnxpL.mp4"
@@ -54,48 +41,52 @@ export function HeroSection() {
           />
         </video>
         
-        {/* Soft overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F9F5F2]/95 via-[#F9F5F2]/70 to-transparent" />
+        {/* Overlay - Strong gradient for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/60 via-transparent to-[#1a1a1a]/20" />
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-6 relative pt-28 pb-20">
-        <div className="max-w-xl">
-          <p className="text-[#B88A9B] font-medium tracking-wide mb-4 text-sm">
-            Damenmode in Lauda-Königshofen
-          </p>
+      <div className="relative h-full flex items-center">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-xl">
+            <span className="inline-block text-white/70 text-sm tracking-[0.2em] uppercase mb-6">
+              Lauda-Königshofen
+            </span>
 
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#333333] leading-[1.15] mb-6">
-            Dein Stil,
-            <br />
-            <span className="text-[#E8AFC1]">deine Geschichte</span>
-          </h1>
+            <h1 className="font-serif text-white text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mb-6">
+              Mode, die sich
+              <br />
+              <span className="italic">anfühlt wie du</span>
+            </h1>
 
-          <p className="text-[#333333]/70 text-lg leading-relaxed mb-10 max-w-md">
-            Bei Rinabelle findest du Mode, die zu dir passt – persönlich ausgewählt, 
-            liebevoll beraten. Komm vorbei und lass dich inspirieren.
-          </p>
+            <p className="text-white/80 text-lg leading-relaxed mb-10 max-w-md">
+              Persönliche Beratung, handverlesene Stücke und eine Atmosphäre zum Wohlfühlen. 
+              Komm vorbei.
+            </p>
 
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href="/kollektion"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#E8AFC1] text-white rounded-full font-medium hover:bg-[#B88A9B] transition-colors"
-            >
-              Zur Kollektion
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/standort"
-              className="inline-flex items-center gap-2 px-7 py-3.5 border border-[#333333]/20 text-[#333333] rounded-full font-medium hover:border-[#E8AFC1] hover:text-[#E8AFC1] transition-colors"
-            >
-              Uns besuchen
-            </Link>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/kollektion"
+                className="px-8 py-4 bg-white text-[#1a1a1a] font-medium hover:bg-white/90 transition-colors"
+              >
+                Kollektion ansehen
+              </Link>
+              <Link
+                href="/standort"
+                className="px-8 py-4 border border-white/40 text-white font-medium hover:bg-white/10 transition-colors"
+              >
+                Boutique finden
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#F9F5F2] to-transparent" />
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div className="w-px h-12 bg-gradient-to-b from-white/50 to-transparent" />
+      </div>
     </section>
   )
 }

@@ -1,11 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Send, Check } from "lucide-react"
+import { Check } from "lucide-react"
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -15,7 +11,6 @@ export function ContactForm() {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1500))
     
     setIsSubmitting(false)
@@ -24,104 +19,92 @@ export function ContactForm() {
 
   if (isSubmitted) {
     return (
-      <div className="bg-card rounded-2xl p-8 text-center">
-        <div className="w-16 h-16 rounded-full bg-accent/30 flex items-center justify-center mx-auto mb-6">
-          <Check className="w-8 h-8 text-accent-foreground" />
+      <div className="bg-white p-8 lg:p-12 text-center">
+        <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-6">
+          <Check className="w-8 h-8 text-accent" />
         </div>
         <h3 className="font-serif text-2xl text-foreground mb-3">
-          Vielen Dank!
+          Danke für deine Nachricht
         </h3>
-        <p className="text-muted-foreground">
-          Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns so schnell wie möglich bei Ihnen.
+        <p className="text-muted-foreground mb-6">
+          Ich melde mich so schnell wie möglich bei dir.
         </p>
-        <Button
+        <button
           onClick={() => setIsSubmitted(false)}
-          variant="outline"
-          className="mt-6 rounded-full border-primary text-foreground hover:bg-primary/10"
+          className="text-sm text-secondary hover:text-foreground transition-colors"
         >
-          Neue Nachricht senden
-        </Button>
+          Neue Nachricht schreiben
+        </button>
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 space-y-6">
+    <form onSubmit={handleSubmit} className="bg-white p-8 lg:p-10 space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <Label htmlFor="name">Name *</Label>
-          <Input
+        <div>
+          <label htmlFor="name" className="block text-sm text-muted-foreground mb-2">
+            Name
+          </label>
+          <input
             id="name"
             name="name"
-            placeholder="Ihr Name"
+            type="text"
             required
-            className="rounded-lg"
+            className="w-full px-4 py-3 border border-border bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors"
+            placeholder="Dein Name"
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="email">E-Mail *</Label>
-          <Input
+        <div>
+          <label htmlFor="email" className="block text-sm text-muted-foreground mb-2">
+            E-Mail
+          </label>
+          <input
             id="email"
             name="email"
             type="email"
-            placeholder="ihre@email.de"
             required
-            className="rounded-lg"
+            className="w-full px-4 py-3 border border-border bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors"
+            placeholder="deine@email.de"
           />
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="phone">Telefon (optional)</Label>
-        <Input
-          id="phone"
-          name="phone"
-          type="tel"
-          placeholder="+49 123 456 789"
-          className="rounded-lg"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="subject">Betreff *</Label>
-        <Input
+      <div>
+        <label htmlFor="subject" className="block text-sm text-muted-foreground mb-2">
+          Betreff
+        </label>
+        <input
           id="subject"
           name="subject"
-          placeholder="Worum geht es?"
+          type="text"
           required
-          className="rounded-lg"
+          className="w-full px-4 py-3 border border-border bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors"
+          placeholder="Worum geht es?"
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="message">Ihre Nachricht *</Label>
-        <Textarea
+      <div>
+        <label htmlFor="message" className="block text-sm text-muted-foreground mb-2">
+          Nachricht
+        </label>
+        <textarea
           id="message"
           name="message"
-          placeholder="Schreiben Sie uns Ihre Nachricht..."
           required
-          className="rounded-lg min-h-[150px]"
+          rows={5}
+          className="w-full px-4 py-3 border border-border bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground transition-colors resize-none"
+          placeholder="Was möchtest du mir sagen?"
         />
       </div>
 
-      <Button
+      <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-primary text-primary-foreground hover:bg-secondary rounded-full"
+        className="w-full px-8 py-4 bg-[#2a2a2a] text-white font-medium hover:bg-[#1a1a1a] disabled:opacity-50 transition-colors"
       >
-        {isSubmitting ? (
-          "Wird gesendet..."
-        ) : (
-          <>
-            Nachricht senden
-            <Send className="ml-2 w-4 h-4" />
-          </>
-        )}
-      </Button>
-
-      <p className="text-xs text-muted-foreground text-center">
-        Mit * markierte Felder sind Pflichtfelder. Ihre Daten werden vertraulich behandelt.
-      </p>
+        {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
+      </button>
     </form>
   )
 }

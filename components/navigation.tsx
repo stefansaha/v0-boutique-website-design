@@ -6,11 +6,10 @@ import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/ueber-uns", label: "Über uns" },
   { href: "/kollektion", label: "Kollektion" },
-  { href: "/erlebnis", label: "Erlebnis" },
-  { href: "/standort", label: "Besuch" },
+  { href: "/ueber-uns", label: "Über uns" },
+  { href: "/erlebnis", label: "Dein Besuch" },
+  { href: "/standort", label: "Standort" },
   { href: "/kontakt", label: "Kontakt" },
 ]
 
@@ -29,29 +28,37 @@ export function Navigation() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? "bg-[#F9F5F2]/95 backdrop-blur-sm shadow-sm py-3"
-          : "bg-transparent py-5"
+          ? "bg-white/95 backdrop-blur-sm py-4"
+          : "bg-transparent py-6"
       )}
     >
-      <nav className="container mx-auto px-6">
+      <nav className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link 
             href="/" 
-            className="font-serif text-2xl text-[#333333] hover:text-[#E8AFC1] transition-colors"
+            className={cn(
+              "font-serif text-xl tracking-wide transition-colors",
+              isScrolled ? "text-foreground" : "text-white"
+            )}
           >
             Rinabelle
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-[#333333]/70 hover:text-[#E8AFC1] transition-colors"
+                className={cn(
+                  "text-sm tracking-wide transition-colors",
+                  isScrolled 
+                    ? "text-muted-foreground hover:text-foreground" 
+                    : "text-white/80 hover:text-white"
+                )}
               >
                 {link.label}
               </Link>
@@ -61,7 +68,10 @@ export function Navigation() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 text-[#333333]"
+            className={cn(
+              "lg:hidden p-2 transition-colors",
+              isScrolled ? "text-foreground" : "text-white"
+            )}
             aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -71,17 +81,18 @@ export function Navigation() {
         {/* Mobile Navigation */}
         <div
           className={cn(
-            "lg:hidden overflow-hidden transition-all duration-300",
-            isOpen ? "max-h-96 mt-4" : "max-h-0"
+            "lg:hidden fixed inset-0 bg-white z-40 transition-all duration-300",
+            isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           )}
+          style={{ top: isScrolled ? '64px' : '76px' }}
         >
-          <div className="flex flex-col gap-1 py-4 border-t border-[#333333]/10">
+          <div className="flex flex-col items-center justify-center h-full gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="text-[#333333]/70 hover:text-[#E8AFC1] transition-colors py-3"
+                className="font-serif text-2xl text-foreground hover:text-secondary transition-colors"
               >
                 {link.label}
               </Link>

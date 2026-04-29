@@ -1,59 +1,23 @@
 "use client"
 
-import { useEffect, useRef } from "react"
 import Link from "next/link"
-
-const VIDEO_URL = "https://res.cloudinary.com/di8ireioi/video/upload/v1777473492/5704899-uhd_4096_2160_24fps_v2mdao.mp4"
+import { ShapeGrid } from "@/components/ui/shape-grid"
 
 export function CTASection() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    video.playbackRate = 0.8
-    video.muted = true
-    video.playsInline = true
-
-    const playVideo = async () => {
-      try {
-        video.muted = true
-        await video.play()
-      } catch {
-        // Silently fail
-      }
-    }
-
-    if (video.readyState >= 1) {
-      playVideo()
-    }
-
-    video.addEventListener("loadedmetadata", () => playVideo(), { once: true })
-    video.addEventListener("canplay", () => playVideo(), { once: true })
-  }, [])
-
   return (
-    <section className="relative pt-20 sm:pt-28 pb-24 lg:pb-32 text-white overflow-hidden">
-      {/* Video Background */}
-      <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-          loop
-          preload="auto"
-          controls={false}
-          className="w-full h-full object-cover"
-        >
-          <source src={VIDEO_URL} type="video/mp4" />
-        </video>
-        
-        {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-[#1a1a1a]/75" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-[#1a1a1a]/50" />
+    <section className="relative pt-20 sm:pt-28 pb-24 lg:pb-32 bg-gradient-to-br from-[#2a2a2a] via-[#1f1f1f] to-[#1a1a1a] text-white overflow-hidden">
+      {/* Shape Grid Background */}
+      <div className="absolute inset-0 opacity-40">
+        <ShapeGrid
+          direction="diagonal"
+          speed={0.2}
+          squareSize={60}
+          borderColor="rgba(200, 138, 155, 0.12)"
+        />
       </div>
+
+      {/* Gradient overlays for depth */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent pointer-events-none" />
       
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-12">
         <div className="max-w-4xl mx-auto">

@@ -84,7 +84,7 @@ export function HeroSection() {
 
       <section className="relative h-[100svh] min-h-[500px] sm:min-h-[600px] max-h-[900px]">
         {/* Video Background */}
-        <div className="absolute inset-0 bg-[#000000] overflow-hidden">
+        <div className="absolute inset-0 bg-[#1a1a1a] overflow-hidden">
           <video
             ref={videoRef}
             autoPlay

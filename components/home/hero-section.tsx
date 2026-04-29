@@ -1,27 +1,57 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.8
+    }
+  }, [])
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image with better quality settings */}
+      {/* Background Video */}
       <div className="absolute inset-0 z-0">
+        {/* Fallback image while video loads */}
         <Image
           src="/images/hero-boutique.jpg"
           alt="Rinabelle Fashion Boutique"
           fill
-          className="object-cover"
+          className={`object-cover transition-opacity duration-1000 ${isVideoLoaded ? "opacity-0" : "opacity-100"}`}
           priority
           quality={100}
           sizes="100vw"
         />
+        
+        {/* Video background */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onLoadedData={() => setIsVideoLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? "opacity-100" : "opacity-0"}`}
+          poster="/images/hero-boutique.jpg"
+        >
+          <source
+            src="https://videos.pexels.com/video-files/5706616/5706616-uhd_2560_1440_25fps.mp4"
+            type="video/mp4"
+          />
+        </video>
+        
         {/* Multi-layer gradient overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/30" />
+        <div className="absolute inset-0 bg-background/20" />
       </div>
 
       {/* Floating decorative elements */}

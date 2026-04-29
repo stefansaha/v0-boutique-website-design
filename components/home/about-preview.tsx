@@ -32,7 +32,7 @@ export function AboutPreview() {
             <span className="text-accent text-sm tracking-[0.15em] uppercase font-medium">Die Geschichte</span>
 
             <h2 className="font-serif text-3xl lg:text-4xl text-foreground mt-4 mb-6 leading-snug">
-              Ein kleiner Laden miterladeb
+              Ein kleiner Laden mit
               <br />
               großem Herz
             </h2>

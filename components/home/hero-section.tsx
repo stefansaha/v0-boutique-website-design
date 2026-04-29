@@ -40,7 +40,7 @@ export function HeroSection() {
 
     // Loop at 4 seconds
     const handleTimeUpdate = () => {
-      if (video.currentTime >= 4) {
+      if (video.currentTime >= 20) {
         video.currentTime = 0
       }
     }

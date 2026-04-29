@@ -49,7 +49,7 @@ export function HeroSection() {
       clearTimeout(fallback)
       video.removeEventListener("canplay", tryPlay)
     }
-  }, [isMobile])
+  }, [])
 
   return (
     <>

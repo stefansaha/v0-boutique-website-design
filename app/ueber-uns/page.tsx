@@ -27,21 +27,26 @@ export default function AboutPage() {
               <p className="text-muted-foreground text-lg mb-8">
                 Lerne die Boutique kennen und erlebe persönliche Beratung in entspannter Atmosphäre.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link
-                  href="/termin"
-                  className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-[#1a1a1a] text-white font-serif text-sm sm:text-base tracking-wide rounded-full hover:bg-[#2a2a2a] transition-all duration-300 hover:shadow-lg"
-                >
-                  <span>Termin vereinbaren</span>
-                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                  </svg>
-                </Link>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
+                <div className="flex flex-col items-center sm:items-start">
+                  <Link
+                    href="/termin"
+                    className="group inline-flex items-center justify-center gap-2.5 px-7 sm:px-9 py-3.5 sm:py-4 bg-[#d4c4b0] text-[#3d3632] font-serif text-sm sm:text-base tracking-wide rounded-full shadow-sm hover:shadow-md hover:bg-[#e0d3c3] hover:-translate-y-0.5 transition-all duration-300 ease-out"
+                  >
+                    <span>Deinen Termin sichern</span>
+                    <svg className="w-4 h-4 opacity-70 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                  </Link>
+                  <span className="text-muted-foreground/70 text-xs sm:text-sm mt-2.5 tracking-wide italic">
+                    Unverbindlich & ganz entspannt
+                  </span>
+                </div>
                 <Link
                   href="/erlebnis"
-                  className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-[#1a1a1a]/20 text-[#1a1a1a] font-serif text-sm sm:text-base tracking-wide rounded-full hover:border-[#1a1a1a]/40 hover:bg-[#1a1a1a]/5 transition-all duration-300"
+                  className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 text-[#5c524a] font-serif text-sm tracking-wide hover:text-[#3d3632] transition-all duration-300"
                 >
-                  <span>Deinen Besuch planen</span>
+                  <span className="border-b border-[#5c524a]/30 group-hover:border-[#3d3632]/50 pb-0.5 transition-colors duration-300">Deinen Besuch planen</span>
                 </Link>
               </div>
             </div>

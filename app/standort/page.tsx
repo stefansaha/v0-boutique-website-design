@@ -67,8 +67,8 @@ export default function LocationPage() {
               </div>
 
               {/* Desktop CTAs */}
-              <div className="hidden sm:flex flex-row items-center gap-5">
-                <div className="flex flex-col items-start">
+              <div className="hidden sm:flex flex-col items-start gap-3">
+                <div className="flex flex-row items-center gap-4">
                   <a
                     href="https://maps.google.com/?q=Hauptstraße+12+97922+Lauda-Königshofen"
                     target="_blank"
@@ -80,16 +80,16 @@ export default function LocationPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                     </svg>
                   </a>
-                  <span className="text-muted-foreground/60 text-sm mt-2.5 tracking-wide italic">
-                    Einfach anklicken und direkt navigieren
-                  </span>
+                  <Link
+                    href="/termin"
+                    className="group inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#c4a47c]/40 text-[#5c524a] font-serif text-base tracking-wide rounded-full hover:border-[#c4a47c]/70 hover:bg-[#c4a47c]/5 transition-all duration-300"
+                  >
+                    <span>Termin vereinbaren</span>
+                  </Link>
                 </div>
-                <Link
-                  href="/termin"
-                  className="group inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[#c4a47c]/40 text-[#5c524a] font-serif text-sm tracking-wide rounded-full hover:border-[#c4a47c]/70 hover:bg-[#c4a47c]/5 transition-all duration-300"
-                >
-                  <span>Termin vereinbaren</span>
-                </Link>
+                <span className="text-muted-foreground/60 text-sm tracking-wide italic">
+                  Einfach anklicken und direkt navigieren
+                </span>
               </div>
               
               {/* Mobile CTA */}
